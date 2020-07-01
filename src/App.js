@@ -5,7 +5,8 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import CodenamesLogin from './components/CodenamesLogin'
+import LoginContainer from './components/loginContainer'
+import GameContainer from './components/gameContainer'
 import './styles/App.css';
 
 function App() {
@@ -14,7 +15,10 @@ function App() {
       <Router>
         <Switch>
           <Route path="/">
-            <CodenamesLogin />
+            <LoginContainer />
+          </Route>
+          <Route path="/game">
+            <GameContainer />
           </Route>
         </Switch>
     </Router>
