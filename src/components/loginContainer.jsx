@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import './../styles/CodenamesLogin.css'
 
-class CodenamesLogin extends Component {
+class LoginContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -49,4 +49,4 @@ class CodenamesLogin extends Component {
     }
 }
 
-export default CodenamesLogin;
+export default LoginContainer;
