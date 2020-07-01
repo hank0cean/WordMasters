@@ -1,14 +1,23 @@
-import React from 'react';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import CodenamesLogin from './components/CodenamesLogin'
 import './styles/App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        Code Nah Mes
-      </header>
-      <CodenamesLogin />
+      <Router>
+        <Switch>
+          <Route path="/">
+            <CodenamesLogin />
+          </Route>
+        </Switch>
+    </Router>
     </div>
   );
 }
