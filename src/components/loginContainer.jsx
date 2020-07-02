@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button, TextField } from '@material-ui/core'
+import GameApi from '../api/game'
 
 import '../styles/LoginContainer.css'
 
@@ -28,6 +29,7 @@ class LoginContainer extends Component {
 
   handlePressTest(e) {
     console.log('test')
+    GameApi.createGame()
   }
 
   render() {
