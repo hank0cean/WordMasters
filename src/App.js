@@ -1,13 +1,12 @@
-import React from "react";
+import React from 'react'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import LoginContainer from './components/LoginContainer'
-import GameContainer from './components/GameContainer'
-import './styles/App.css';
+  Route
+} from 'react-router-dom'
+import LoginContainer from './components/loginContainer'
+import GameContainer from './components/gameContainer'
+import './styles/App.css'
 
 function App() {
   return (
@@ -21,9 +20,9 @@ function App() {
             <GameContainer />
           </Route>
         </Switch>
-    </Router>
+      </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
