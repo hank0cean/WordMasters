@@ -1,43 +1,48 @@
-import React, { Component } from 'react';
-import { Button, TextField } from '@material-ui/core';
+import React, { Component } from 'react'
+import { Button, TextField } from '@material-ui/core'
 
-import './../styles/LoginContainer.css';
+import '../styles/LoginContainer.css'
 
 class LoginContainer extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            roomName: '',
-        };
-
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: '',
+      roomName: '',
     }
 
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value,
-        });
-    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
 
-    handleSubmit(event) {
-        console.log(`You've entered your username: '${this.state.username}' and a room name: '${this.state.roomName}'`);
-        event.preventDefault();
-    }
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    })
+  }
 
-    render() {
-        return (
-            <div id="LoginContainer">
-                <h1>Codenames.plus.plus</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <TextField id="usernameInput" name="username" type="text" value={this.state.username} onChange={this.handleChange} label="Username" variant="outlined" />
-                    <TextField id="roomNameInput" name="roomName" type="text" value={this.state.roomName} onChange={this.handleChange} label="Room Name" variant="outlined" />
-                    <Button type="submit" variant="contained">Submit</Button>
-                </form>
-            </div>
-        );
-    }
+  handleSubmit(event) {
+    console.log(`You've entered your username: '${this.state.username}' and a room name: '${this.state.roomName}'`)
+    event.preventDefault()
+  }
+
+  handlePressTest(e) {
+    console.log('test')
+  }
+
+  render() {
+    return (
+      <div id="LoginContainer">
+        <h1>Codenames.plus.plus</h1>
+        <form onSubmit={this.handleSubmit}>
+          <TextField id="usernameInput" name="username" type="text" value={this.state.username} onChange={this.handleChange} label="Username" variant="outlined" />
+          <TextField id="roomNameInput" name="roomName" type="text" value={this.state.roomName} onChange={this.handleChange} label="Room Name" variant="outlined" />
+          <Button type="submit" variant="contained">Submit</Button>
+        </form>
+        <Button type="submit" variant="contained" onClick={this.handlePressTest}>Submit</Button>
+      </div>
+    )
+  }
 }
 
-export default LoginContainer;
+export default LoginContainer
