@@ -5,8 +5,8 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import LoginContainer from './components/LoginContainer'
-import GameContainer from './components/GameContainer'
+import LoginContainer from './components/loginContainer'
+import GameContainer from './components/gameContainer'
 import './styles/App.css';
 
 function App() {
