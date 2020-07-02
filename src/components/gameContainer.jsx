@@ -1,37 +1,24 @@
 import React, { Component } from 'react'
+import Board from './Board'
 
-import './../styles/CodenamesLogin.css'
+import './../styles/GameContainer.css'
 
-class CodenamesLogin extends Component {
+class GameContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            roomName: '',
+
         };
-
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-    }
-
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value,
-        });
-    }
-
-    handleSubmit(event) {
-        console.log(`You've entered your username: '${this.state.username}' and a room name: '${this.state.roomName}'`);
-        event.preventDefault();
     }
 
     render() {
         return (
-            <div id="codenamesLogin">
+            <div id="GameContainer">
                 <h1>GAME CONTAINER</h1>
+                <Board />
             </div>
         );
     }
 }
 
-export default CodenamesLogin;
+export default GameContainer;
