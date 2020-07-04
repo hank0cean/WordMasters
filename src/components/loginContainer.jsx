@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, TextField } from '@material-ui/core';
 
-import './../styles/LoginContainer.css';
+import './../styles/loginContainer.css';
 
 class LoginContainer extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class LoginContainer extends Component {
 
     render() {
         return (
-            <div id="LoginContainer">
+            <div id="loginContainer">
                 <h1>Codenames.plus.plus</h1>
                 <form onSubmit={this.handleSubmit}>
                     <TextField id="usernameInput" name="username" type="text" value={this.state.username} onChange={this.handleChange} label="Username" variant="outlined" />

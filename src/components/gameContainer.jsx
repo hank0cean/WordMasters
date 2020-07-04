@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Board from './Board'
+import Board from './board'
 
-import './../styles/GameContainer.css'
+import './../styles/gameContainer.css'
 
 class GameContainer extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class GameContainer extends Component {
 
     render() {
         return (
-            <div id="GameContainer">
+            <div id="gameContainer">
                 <h1>GAME CONTAINER</h1>
                 <Board />
             </div>
