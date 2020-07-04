@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, TextField } from '@material-ui/core'
 import GameApi from '../api/game'
 
-import '../styles/LoginContainer.css'
+import '../styles/loginContainer.css'
 
 class LoginContainer extends Component {
   constructor(props) {
@@ -34,12 +34,11 @@ class LoginContainer extends Component {
 
   render() {
     return (
-      <div id="LoginContainer">
+      <div id="loginContainer">
         <h1>Codenames.plus.plus</h1>
         <form onSubmit={this.handleSubmit}>
           <TextField id="usernameInput" name="username" type="text" value={this.state.username} onChange={this.handleChange} label="Username" variant="outlined" />
           <TextField id="roomNameInput" name="roomName" type="text" value={this.state.roomName} onChange={this.handleChange} label="Room Name" variant="outlined" />
-          <Button type="submit" variant="contained">Submit</Button>
         </form>
         <Button type="submit" variant="contained" onClick={this.handlePressTest}>Submit</Button>
       </div>
