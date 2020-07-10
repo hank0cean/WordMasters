@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Card from './card'
 
-import './../styles/board.css'
+import './../styles/gameBoard.css'
 
-class Board extends Component {
+class GameBoard extends Component {
 
   renderRow(id_number) {
     const id = 'row-' + id_number;
@@ -22,7 +22,7 @@ class Board extends Component {
 
   render() { 
     return ( 
-      <div className="board">
+      <div className="gameBoard">
         {this.renderRow(1)}
         {this.renderRow(2)}
         {this.renderRow(3)}
@@ -33,4 +33,4 @@ class Board extends Component {
   }
 }
  
-export default Board;
+export default GameBoard;
