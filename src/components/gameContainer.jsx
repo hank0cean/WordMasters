@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import Board from './board'
+import GameBoard from './gameBoard'
+import GameNavbar from './gameNavbar'
 
 import './../styles/gameContainer.css'
 
@@ -13,12 +14,12 @@ class GameContainer extends Component {
 
 	render() {
 		return (
-			<div id="gameContainer">
-				<h1>GAME CONTAINER</h1>
-				<Board />
+			<div className="gameContainer">
+				<GameNavbar />
+				<GameBoard />
 			</div>
 		);
 	}
 }
 
-export default GameContainer
+export default GameContainer;
