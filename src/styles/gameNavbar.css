@@ -54,6 +54,10 @@
   width: 100%;
 }
 
+.itemDropdown {
+  width: 100%;
+}
+
 .navbarItem:last-child {
   margin-top: auto;
 }

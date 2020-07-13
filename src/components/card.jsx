@@ -4,6 +4,12 @@ import { Button } from '@material-ui/core'
 import './../styles/card.css'
 
 class Card extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+
+    }
+  }
 
   render() { 
     return ( 
