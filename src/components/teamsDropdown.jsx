@@ -1,12 +1,8 @@
 import React from 'react';
 import { Box, Button } from '@material-ui/core';
-import { spacing } from '@material-ui/system';
 
 function TeamsDropdown(props) {
-  const theme = {
-    spacing: 8,
-  }
-
+  
   return ( 
     ((props.itemOpen &&
     <div className="teamsDropdown">
