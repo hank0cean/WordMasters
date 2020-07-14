@@ -9,7 +9,7 @@
   z-index: 2;
 }
 
-.gameNavbar.activeItem {
+.gameNavbar.active {
   width: 22rem;
 }
 
@@ -17,11 +17,11 @@
   width: 22rem;
 }
 
-.gameNavbar:hover .linkText {
+.gameNavbar:hover .linkText, .gameNavbar.active .linkText {
   display: inline;
 }
 
-.gameNavbar:hover .navbarLogo svg {
+.gameNavbar:hover .navLogo svg {
   transform: rotate(-180deg);
   margin-left: 2rem;
 
@@ -37,7 +37,7 @@
   height: 100%;
 }
 
-.navbarLogo {
+.navLogo {
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 1rem;
@@ -49,12 +49,12 @@
   width: 100%;
 }
 
-.navbarLogo svg {
+.navLogo svg {
   transform: rotate(0deg);
   transition: var(--transition-speed);
 }
 
-.navbarItem {
+.navItem {
   width: 100%;
 }
 
@@ -62,7 +62,7 @@
   width: 100%;
 }
 
-.navbarItem:last-child {
+.navItem:last-child {
   margin-top: auto;
 }
 
@@ -76,7 +76,7 @@
   transition: var(--transition-speed);
 }
 
-.dropdownToggle:hover {
+.dropdownToggle:hover, .dropdownToggle.active {
   filter: grayscale(0%) opacity(1);
   background-color: var(--bg-secondary);
   color: var(--text-secondary);
@@ -96,6 +96,7 @@
 .dropdownContainer {
   display: block;
   width: 22rem;
+  transition: var(--transition-speed);
 }
 
 .teamsDropdown {
@@ -110,6 +111,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transition: var(--transition-speed);
 }
 
 .teamsInfo {
@@ -130,13 +132,17 @@
 }
 
 .verticalDivider {
-  background-color: green;
+  background-color: var(--text-primary);
+  filter: grayscale(100%) opacity(0.7);
   height: 100%;
-  width: 6px;
+  width: 4px;
+  border-radius: 5px 5px 0px 0px;
 }
 
 .horizontalDivider {
-  background-color: green;
-  height: 6px;
+  background-color: var(--text-primary);
+  filter: grayscale(100%) opacity(0.7);
+  height: 4px;
   width: 100%;
+  border-radius: 5px;
 }

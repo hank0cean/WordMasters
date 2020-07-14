@@ -12,7 +12,7 @@ function TeamsDropdown(props) {
           <p>--------</p>
           {props.redTeam}
           <Box my="1rem">
-            <Button variant="contained">Join Red</Button>
+            <Button variant="contained" color="secondary">Join Red</Button>
           </Box>
         </div>
         <div className="verticalDivider"></div>
@@ -20,14 +20,12 @@ function TeamsDropdown(props) {
           Blue Team
           <p>--------</p>
           {props.blueTeam}
-          <Box my="1rem">
-            <Button variant="contained">Join Blue</Button>
+          <Box ml="0.5rem" my="1rem">
+            <Button variant="contained" color="primary">Join Blue</Button>
           </Box>
         </div>
-        <div className="horizontalDivider"></div>
-        <div className="verticalDivider"></div>
-        <div className="horizontalDivider"></div>
       </div>
+      <div className="horizontalDivider"></div>
       <Box mt="1rem">
         <Button variant="contained">Randomize Teams</Button>
       </Box>
