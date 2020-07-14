@@ -9,6 +9,10 @@
   z-index: 2;
 }
 
+.gameNavbar.activeItem {
+  width: 22rem;
+}
+
 .gameNavbar:hover {
   width: 22rem;
 }
@@ -62,7 +66,7 @@
   margin-top: auto;
 }
 
-.navbarLink {
+.dropdownToggle {
   display: flex;
   align-items: center;
   height: 5rem;
@@ -72,13 +76,13 @@
   transition: var(--transition-speed);
 }
 
-.navbarLink:hover {
+.dropdownToggle:hover {
   filter: grayscale(0%) opacity(1);
   background-color: var(--bg-secondary);
   color: var(--text-secondary);
 }
 
-.navbarLink svg {
+.dropdownToggle svg {
   width: 2rem;
   min-width: 2rem;
   margin: 0 1.5rem;
@@ -87,4 +91,52 @@
 .linkText {
   display: none;
   margin-left: 1rem;
+}
+
+.dropdownContainer {
+  display: block;
+  width: 22rem;
+}
+
+.teamsDropdown {
+  white-space: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  text-align: center;
+  width: 18rem;
+  height: 100%;
+  border-radius: 25px;
+  background-color: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.teamsInfo {
+  display: grid;
+  grid-template-columns: 49% 2% 49%;
+  color: white;
+}
+
+.redTeam {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.blueTeam {
+  display: flex;
+  flex-direction: column;
+}
+
+.verticalDivider {
+  background-color: green;
+  height: 100%;
+  width: 6px;
+}
+
+.horizontalDivider {
+  background-color: green;
+  height: 6px;
+  width: 100%;
 }

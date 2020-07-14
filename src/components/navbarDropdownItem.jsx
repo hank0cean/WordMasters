@@ -1,29 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import './../styles/gameNavbar.css'
 
-class NavbarDropdownItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    }
-  }
+function NavbarDropdownItem(props){
 
-  render() { 
-    return ( 
+  // const [open, setOpen] = useState(false);
+
+  // <... onClick={() => setOpen(!open)}>
+
+  return ( 
       <li className="navbarItem">
-        <a href="#" className="navbarLink">
-          {this.props.itemImage}
+        <a href="#" className="dropdownToggle" onClick={props.handleClick}>
+          {props.itemImage}
           <span className="linkText">
-            {this.props.itemText}
+            {props.itemText}
           </span>
         </a>
-        <div>
-          {this.props.dropdownInfo}
+        <div className="dropdownContainer">
+          {props.children}
         </div>
       </li>
-    );
-  }
+  );
 }
  
 export default NavbarDropdownItem;
