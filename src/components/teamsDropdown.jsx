@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Button } from '@material-ui/core';
+import TeamListBox from './teamListBox'
 
 function TeamsDropdown(props) {
   
@@ -7,23 +8,9 @@ function TeamsDropdown(props) {
     ((props.itemOpen &&
     <div className="teamsDropdown">
       <div className="teamsInfo">
-        <div className="redTeam">
-          Red Team
-          <p>--------</p>
-          {props.redTeam}
-          <Box my="1rem">
-            <Button variant="contained" color="secondary">Join Red</Button>
-          </Box>
-        </div>
+        <TeamListBox teamName="Red" playerList={props.redTeam} />
         <div className="verticalDivider"></div>
-        <div className="blueTeam">
-          Blue Team
-          <p>--------</p>
-          {props.blueTeam}
-          <Box ml="0.5rem" my="1rem">
-            <Button variant="contained" color="primary">Join Blue</Button>
-          </Box>
-        </div>
+        <TeamListBox teamName="Blue" playerList={props.blueTeam} />
       </div>
       <div className="horizontalDivider"></div>
       <Box mt="1rem">
