@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import NavDropdownItem from './navDropdownItem';
 import TeamsDropdown from './teamsDropdown';
 import DecksDropdown from './decksDropdown';
+import SettingsDropdown from './settingsDropdown';
 
 import './../styles/gameNavbar.css'
 
@@ -44,7 +45,7 @@ function GameNavbar(props) {
           itemText="Settings"
           itemIsActive={(activeItem === 'settings' ? true : false)}
           handleClick={() => setActiveItem(activeItem === 'settings' ? 'none' : 'settings')}>
-            <div></div>
+            <SettingsDropdown itemOpen={activeItem === 'settings' ? true : false} />
         </NavDropdownItem>
       </ul>
     </nav>
