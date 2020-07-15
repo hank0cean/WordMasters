@@ -13,7 +13,7 @@ function NavDropdownItem(props){
               {props.itemText}
             </span>
         </a>
-        <div className="dropdownContainer">
+        <div className={"dropdownContainer" + (props.itemIsActive ? ' active' : '')}>
           {props.children}
         </div>
       </li>

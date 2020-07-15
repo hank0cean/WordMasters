@@ -95,23 +95,30 @@
 
 .dropdownContainer {
   display: block;
-  width: 22rem;
+  width: 18rem;
+  height: 0%;
+  transition: var(--transition-speed);
+}
+
+.dropdownContainer.active {
+  white-space: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  display: block;
+  width: 18rem;
+  height: auto;
+  border-radius: 25px;
+  background-color: var(--bg-secondary);
   transition: var(--transition-speed);
 }
 
 .teamsDropdown {
-  white-space: 1rem;
-  margin: 1rem;
-  padding: 1rem;
   text-align: center;
-  width: 18rem;
+  width: 100%;
   height: 100%;
-  border-radius: 25px;
-  background-color: var(--bg-secondary);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: var(--transition-speed);
 }
 
 .teamsInfo {
