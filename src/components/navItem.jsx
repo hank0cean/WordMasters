@@ -8,7 +8,7 @@ function NavItem(props){
   return ( 
     <li className={(props.iconLogo ? "navLogo" : "navItem")}>
       <a
-        href={props.itemLink ? props.itemLink : "javascript:void(0);"}
+        href={(props.itemLink ? props.itemLink : "javascript:void(0);")}
         className={"dropdownToggle" + (props.itemIsActive ? ' active' : '')}
         onClick={props.handleClick}>
           <span className="iconLeft">{props.iconLeft}</span>

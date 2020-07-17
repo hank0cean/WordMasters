@@ -4,10 +4,7 @@ import { Box, Button } from '@material-ui/core';
 import './../styles/teamsDropdown.css'
 
 class TeamsDropdown extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+  
   teamListBox(teamName, playerList) {
 
     return (
