@@ -1,0 +1,105 @@
+
+.navLogo {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  font-size: 1.5rem;
+  letter-spacing: 0.3ch;
+  width: 100%;
+}
+
+.navLogo svg {
+  transform: rotate(0deg);
+  transition: var(--transition-speed);
+}
+
+.navItem {
+  width: 100%;
+}
+
+.itemDropdown {
+  width: 100%;
+}
+
+.navItem:last-child {
+  margin-top: auto;
+}
+
+.dropdownToggle {
+  display: flex;
+  align-items: center;
+  height: 5rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  filter: grayscale(100%) opacity(0.7);
+  transition: var(--transition-speed);
+}
+
+.dropdownToggle:hover, .dropdownToggle.active {
+  filter: grayscale(0%) opacity(1);
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.navbar-dropdown-enter {
+  opacity: 0;
+  width: 100%;
+  height: auto;
+  background-color: var(--bg-secondary);
+} 
+.navbar-dropdown-enter-active {
+  opacity: 1;
+  margin: 1rem;
+  padding: 1rem;
+  display: block;
+  width: 18rem;
+  height: auto;
+  border-radius: 25px;
+  background-color: var(--bg-secondary);
+  transition: all var(--transition-speed) ease-in;
+}
+.navbar-dropdown-enter-done {
+  opacity: 1;
+  margin: 1rem;
+  padding: 1rem;
+  display: block;
+  width: 18rem;
+  height: auto;
+  border-radius: 25px;
+  background-color: var(--bg-secondary);
+  transition: all var(--transition-speed) ease-in;
+}
+.navbar-dropdown-exit {
+  white-space: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  display: block;
+  width: 18rem;
+  height: auto;
+  border-radius: 25px;
+  background-color: var(--bg-secondary);
+  transition: all var(--transition-speed) ease;
+}
+.navbar-dropdown-exit-active {
+  opacity: 0;
+  margin: 0rem;
+  padding: 0rem;
+  width: 100%;
+  height: auto;
+  background-color: var(--bg-secondary);
+  transition: all var(--transition-speed) ease;
+}
+
+.dropdownToggle svg {
+  width: 2rem;
+  min-width: 2rem;
+  margin: 0 1.5rem;
+}
+
+.linkText {
+  display: none;
+  margin-left: 1rem;
+}

@@ -16,7 +16,6 @@ class GameBoard extends Component {
         <Card />
         <Card />
       </div>
-      // {this.renderCard()}
     );
   }
 
