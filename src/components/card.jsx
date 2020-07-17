@@ -1,17 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button } from '@material-ui/core'
 
 import './../styles/card.css'
 
-class Card extends Component {
+function Card(props) {
 
-  render() { 
-    return ( 
-      <span className="card">
-        <Button variant="contained">card button</Button>
-      </span>
-    );
-  }
+  return ( 
+    <span className="card">
+      <Button variant="contained">card button</Button>
+    </span>
+  );
 }
 
 export default Card;
