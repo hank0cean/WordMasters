@@ -8,15 +8,23 @@ class GameContainer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-
+			
 		};
+
 	}
 
+
 	render() {
+		let cardList = ['hello', 'world', 'hello', 'world', 'hello',
+										'world', 'hello', 'world', 'hello', 'world',
+										'hello', 'world', 'hello', 'world', 'hello',
+										'world', 'hello', 'world', 'hello', 'world',
+										'hello', 'world', 'hello', 'world', 'hello',];
+
 		return (
 			<div className="gameContainer">
 				<GameNavbar />
-				<GameBoard />
+				<GameBoard cardList={cardList} />
 			</div>
 		);
 	}

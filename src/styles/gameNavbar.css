@@ -2,10 +2,8 @@
   top: 0;
   width: 5rem;
   height: 100vh;
-  position: fixed;
   background-color: var(--bg-primary);
   transition: width var(--transition-speed) ease;
-  overflow: visible;
   z-index: 2;
 }
 

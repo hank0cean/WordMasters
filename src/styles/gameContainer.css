@@ -1,4 +1,7 @@
 .gameContainer {
+  display: grid;
+  grid-template-columns: 5rem auto;
   height: 100vh;
-  position: relative;
+  width: 100vw;
+  position: fixed;
 }

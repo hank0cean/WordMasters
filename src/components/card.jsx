@@ -7,7 +7,8 @@ function Card(props) {
 
   return ( 
     <span className="card">
-      <Button variant="contained">card button</Button>
+      <Button variant="contained">{props.cardNumber}</Button>
+      
     </span>
   );
 }
