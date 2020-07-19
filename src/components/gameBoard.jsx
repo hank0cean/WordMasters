@@ -10,7 +10,7 @@ class GameBoard extends Component {
     return ( 
       <div className="gameBoardGrid">
         {this.props.cardList.map(card => {
-          return <Card cardData={card} cardNumber={i++} />
+          return <Card card={card} cardNumber={i++} />
         })}
         
       </div>

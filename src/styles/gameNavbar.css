@@ -22,7 +22,6 @@
 .gameNavbar:hover .navLogo svg {
   transform: rotate(-180deg);
   margin-left: 2rem;
-
 }
 
 .navbarNav {
