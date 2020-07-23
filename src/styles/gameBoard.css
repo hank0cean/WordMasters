@@ -1,15 +1,12 @@
-.gameBoard {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-left: 5rem;
-  padding: 1rem;
-  height: 100vh;
+
+.gameBoardGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(10px, 400px));
+  grid-template-rows: repeat(5, minmax(10px, 1fr));
+  padding: 2rem;
+  padding-right: 3rem;
+  padding-bottom: 3rem;
+  gap: 4% 2%;
   float: none;
   z-index: 1;
-}
-
-.boardRow {
-  margin-bottom: 1rem;
 }
