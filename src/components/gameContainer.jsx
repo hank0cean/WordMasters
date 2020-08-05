@@ -1,53 +1,54 @@
 import React, { Component } from 'react'
+import { useParams } from 'react-router-dom'
+
 import GameBoard from './gameBoard'
 import GameNavbar from './gameNavbar'
+//import LoadingSpinner from './loadingSpinner'
+import GameApi from '../api/game'
+
 
 import './../styles/gameContainer.css'
 
+
 class GameContainer extends Component {
+	constructor(props) {
+		super(props);
+		this.state = { 
+			isLoading: true,
+		}
+		this.gameRefID = this.props.match.params.gameRefID;
+		this.getCardListByGameID(this.gameRefID);
+	}
 
-	render() {
-		let wordList = ['hello', 'world', 'hello', 'world', 'hello',
-										'world', 'hello', 'world', 'hello', 'world',
-										'hello', 'world', 'hello', 'world', 'hello',
-										'world', 'hello', 'world', 'hello', 'world',
-										'hello', 'world', 'hello', 'world', 'hello',];
-
-		let cardList = [
-			{word: 'blue', color: 'blue'},
-			{word: 'red', color: 'red'},
-			{word: 'none', color: 'none'},
-			{word: 'red', color: 'red'},
-			{word: 'blue', color: 'blue'},
-			{word: 'black', color: 'black'},
-			{word: 'none', color: 'none'},
-			{word: 'blue', color: 'blue'},
-			{word: 'none', color: 'none'},
-			{word: 'red', color: 'red'},
-			{word: 'none', color: 'none'},
-			{word: 'blue', color: 'blue'},
-			{word: 'black', color: 'black'},
-			{word: 'blue', color: 'blue'},
-			{word: 'none', color: 'none'},
-			{word: 'red', color: 'red'},
-			{word: 'none', color: 'none'},
-			{word: 'blue', color: 'blue'},
-			{word: 'none', color: 'none'},
-			{word: 'red', color: 'red'},
-			{word: 'blue', color: 'blue'},
-			{word: 'red', color: 'red'},
-			{word: 'none', color: 'none'},
-			{word: 'red', color: 'red'},
-			{word: 'blue', color: 'blue'},
-			];
-
-		return (
-			<div className="gameContainer">
-				<GameNavbar />
-				<GameBoard wordList={wordList} cardList={cardList} />
-			</div>
+	async getCardListByGameID(gameRefID) {
+		await GameApi.findGameByID(gameRefID).then((snapshot) => {
+				this.cardList = snapshot.val().currentBoard;
+				this.setState({isLoading: false});
+				// console.log("promise returned");
+				// console.log("snapshot after return: ", snapshot);
+			}
 		);
 	}
-}
 
+	render() { 
+		if (!this.state.isLoading) {
+			// console.log("rendering gameContainer")
+			return ( 
+				<div className="gameContainer">
+					<GameNavbar />
+					<GameBoard cardList={this.cardList} />
+				</div>
+			);
+		}
+		else {
+			return (
+				<div className="loadingSpinner">
+					loadingSpinner
+				</div>
+			);
+		}
+	}
+}
+ 
 export default GameContainer;
+
