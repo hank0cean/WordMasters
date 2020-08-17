@@ -15,10 +15,9 @@ class GameBoard extends Component {
     return ( 
       <div className="gameBoardGrid">
         {this.props.cardList.map(card => {
-          return <Card card={card} cardNumber={i++} />
+          return <Card card={card} cardFlipHandler={this.props.cardFlipHandler} cardNumber={i++} />
         })}
       </div>
-
     );
   }
 }

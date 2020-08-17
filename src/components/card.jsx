@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ButtonBase, Typography } from '@material-ui/core'
+import { ButtonBase, Typography, capitalize } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     borderColor: "#202020",
     transition: "all 750ms",
     overflow: "hidden",
+    textTransform: "capitalize",
     '&:hover': {
       boxShadow: "rgba(2, 8, 20, 0.1) 0px 0.35rem 1.175rem, rgba(2, 8, 20, 0.08) 0px 0.175rem 0.5rem",
       transform: "translateY(1px) scale(1.15)",
@@ -58,25 +59,25 @@ function Card(props) {
   */
 
   const classes = useStyles();
-  const [isFlipped, flipCard] = useState(false);
+  // const [isFlipped, flipCard] = useState(false);
 
-  const handleClick = () => {
-    flipCard(isFlipped ? true : true)
-  }
+  // const flipCard = () => {
+  //   flipCard(isFlipped ? true : true);
+  // }
 
   return ( 
     <ButtonBase
       color="primary"
       variant="outlined"
-      onClick={handleClick}
+      onClick={() => props.cardFlipHandler(props.cardNumber)}
       className={classes.card}
-      style={isFlipped ? cardColorStyle(props.card.color) : {}}
+      style={props.card.isFlipped ? cardColorStyle(props.card.color) : {}}
     >
       <Typography
         variant="subtitle1"
         className="cardWord"
       >
-        <p>{isFlipped ? 'flipped' : 'hidden'}___{props.card.word}</p>
+        <p>{props.card.word}</p>
       </Typography>
     </ButtonBase>
   );

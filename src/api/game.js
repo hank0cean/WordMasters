@@ -2,14 +2,6 @@ import database from './database'
 
 export default class GameApi {
 
-  static async testButtonPress() {
-    const ref = database.ref('games')
-    const test = ref.push({test: 'test'})
-    const obj = await test.once('value')
-    console.log(test)
-    console.log(obj.val())
-  }
-
   static async findGameByID(gameRefID) {
     console.log("gameRefID before db query: ", gameRefID)
     const queryRef = database.ref('games').child(gameRefID)
@@ -28,6 +20,8 @@ export default class GameApi {
       playerList: [],
       redTeamList: [],
       blueTeamList: [],
+      redScore: 0,
+      blueScore: 0,
       currentDeck: 'standard',
       currentBoard: [
         {word: 'bite', color: 'blue', isFlipped: 0},
@@ -58,6 +52,7 @@ export default class GameApi {
       ],
     });
     const gameObj = await gameRef.once('value')
+
     console.log("gameRef: " + gameRef.key)
     console.log("gameObj.val():  ", gameObj.val())
 

@@ -4,7 +4,7 @@ import {
   Switch,
   Route,
 } from 'react-router-dom'
-import LoginContainer from './components/loginContainer'
+import HomeContainer from './components/homeContainer'
 import GameContainer from './components/gameContainer'
 import './styles/App.css'
 
@@ -14,8 +14,9 @@ function App() {
       <Router>
         <Switch>
           <Route
-            path="/login"
-            component={LoginContainer}
+            exact
+            path="/"
+            component={HomeContainer}
           />
           <Route
             path="/game/:gameRefID"
