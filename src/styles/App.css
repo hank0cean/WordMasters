@@ -4,7 +4,9 @@
   --text-secondary: #ececec;
   --bg-primary: #23232e;
   --bg-secondary: #141418;
-  --transition-speed: 600ms;
+  --sub-menu-primary: #333342;
+  --sub-menu-secondary: #464661;
+  --transition-speed: 500ms;
   color: var(--text-primary);
   background-color: var(--bg-primary);
   margin: 0;
