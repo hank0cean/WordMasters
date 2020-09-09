@@ -9,17 +9,18 @@ function GameScoreInfo(props) {
   const [redScore, setRedScore] = useState('');
   const [redTurn, setRedTurn] = useState();
 
-  GameApi.addListenerToGame(props.gameRefID, (snapshot) => {
-    setRedScore(snapshot.val().redScore);
-    setBlueScore(snapshot.val().blueScore);
-    setRedTurn(snapshot.val().redTurn);
+  GameApi.addListenerForRefChild('games', props.gameRefID, 'child_changed', (snapshot) => {
+    const gameObj = snapshot.val();
+    setRedScore(gameObj.redScore);
+    setBlueScore(gameObj.blueScore);
+    setRedTurn(gameObj.redTurn);
   });
 
   GameApi.findGameByID(props.gameRefID)
-    .then((snapshot) => {
-      setRedScore(snapshot.val().redScore);
-      setBlueScore(snapshot.val().blueScore);
-      setRedTurn(snapshot.val().redTurn);
+    .then((gameObj) => {
+      setRedScore(gameObj.redScore);
+      setBlueScore(gameObj.blueScore);
+      setRedTurn(gameObj.redTurn);
     })
 
   return (

@@ -20,6 +20,8 @@ export default class GameApi {
       blueScore: (redTurn ? 8 : 9),
       redTurn: redTurn,
       currentDeck: 'standard',
+      spymaster1: false,
+      spymaster2: false,
     };
     const gameRef = gamesRef.push(gameObj);
     this.createCardListFromDeck(gameRef.key, gameObj.currentDeck, gameObj.redTurn);
@@ -30,32 +32,36 @@ export default class GameApi {
   /**
    * Retrieve the value associated with the given game reference id.
    * 
-   * @param {String} gameRefID    - Firebase database reference id for the Game.
+   * @param   {String}  gameRefID   - Firebase database reference id for the Game.
+   * 
+   * @returns {Object}              - Firebase database object .val() return.
    */
   static async findGameByID(gameRefID) {
     const queryRef = database.ref('games').child(gameRefID);
     const queryObj = await queryRef.once('value');
 
-    return queryObj;
+    return queryObj.val();
   }
 
   /**
    * Add a function to a Firebase database listener that
-   *    runs when a game's child changes on the db. 
+   *    runs when the child changes on the db.
    * 
-   * @param {String}    gameRefID   - Firebase database reference id for the Game.
-   * @param {Function}  func        - Function for the listener.
+   * @param   {String}    ref         - Name of firebase reference's root.
+   * @param   {String}    refID       - Firebase database reference id.
+   * @param   {String}    eventType   - Firebase reference .on(eventType).
+   * @param   {Function}  func        - Callback function for the listener.
    */
-  static async addListenerToGame(gameRefID, func) {
-    return database.ref('games').child(gameRefID).on('child_changed', (snapshot) => {func(snapshot)})
+  static async addListenerForRefChild(ref, refID, eventType='value', func) {
+    database.ref(ref).child(refID).on(eventType, (snapshot) => {func(snapshot)})
   }
 
   /**
    * Create a list of cards using given deck name for the game associated with the game reference id.
    * 
-   * @param {String}  gameRefID   - Firebase database reference id for the Game.
-   * @param {String} deckName     - Name of deck to retrieve words for the game from.
-   * @param {Boolean} redFirst    - Random first turn generated.
+   * @param {String}    gameRefID   - Firebase database reference id for the Game.
+   * @param {String}    deckName    - Name of deck to retrieve words for the game from.
+   * @param {Boolean}   redFirst    - Random first turn generated.
    */
   static async createCardListFromDeck(gameRefID, deckName, redFirst) {
     let redCount = (redFirst ? 9 : 8);
@@ -93,23 +99,29 @@ export default class GameApi {
   }
 
   /**
-   * Add a function to a Firebase database listener that
-   *    runs when a card's child changes on the db. 
-   * 
-   * @param {String}    cardRefID   - Firebase database reference id for the Card.
-   * @param {Function}  func        - Function for the listener.
-   */
-  static async addListenerToCard(cardRefID, func) {
-    return database.ref('cards').child(cardRefID).on('child_changed', (snapshot) => {func(snapshot)})
-  }
-
-  /**
    * Retrieves value associatied with the given Firebase database reference id.
    * 
    * @param {String} cardRefID  - Firebase database reference id for the Card.
    */
   static async getCardRefByID(cardRefID) {
     return await database.ref('cards').child(cardRefID).once('value');
+  }
+
+  /**
+   * Change 'isFlipped' value to True on card with given reference id.
+   * 
+   * @param {String} cardRefID  - Firebase database reference id for the Card.
+   */
+  static addSpymaster(gameRefID, second=false) {
+    var updates = {};
+
+    if (second) {
+      updates['/games/' + gameRefID + '/spymaster2'] = true;
+    }
+    else {
+      updates['/games/' + gameRefID + '/spymaster1'] = true;
+    }
+    database.ref().update(updates);
   }
 
   /**

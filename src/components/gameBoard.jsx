@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from './card';
+import { Button } from '@material-ui/core';
 
 import GameApi from '../api/game';
 import '../styles/gameBoard.css';
@@ -9,23 +10,26 @@ class GameBoard extends Component {
     super(props);
 		this.state = { 
 			isLoading: true,
-			cardList: [],
+      cardList: [],
+      spymaster: false,
     }
-    this.getCardListByGameID.bind(this)
+    this.getCardListByGameID.bind(this);
+    this.becomeSpymaster.bind(this);
   }
 
   componentDidMount() {
     this.setState({isLoading: true, cardList: []});
-  
     this.getCardListByGameID(this.props.gameRefID);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.gameRefID !== prevProps.gameRefID) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props !== prevProps) {
+      if (prevState.spymaster) {
+        this.setState({spymaster: true});
+      }
       this.getCardListByGameID(this.props.gameRefID);
     }
   }
-
 
 	getCardListByGameID(gameRefID) {
     GameApi.getCardsByGameID(gameRefID)
@@ -42,7 +46,26 @@ class GameBoard extends Component {
         this.setState({isLoading: false, cardList: null});
       }
     })
-	}
+  }
+  
+  async becomeSpymaster(gameRefID) {
+
+    const gameObj = await GameApi.findGameByID(gameRefID);
+
+    if (!gameObj.spymaster1) {
+      GameApi.addSpymaster(gameRefID);
+      this.setState({spymaster: true});
+      console.log("set spymaster1 to true")
+    }
+    else if (!gameObj.spymaster2) {
+      GameApi.addSpymaster(gameRefID, true);
+      this.setState({spymaster: true});
+      console.log("set spymaster2 to true")
+    }
+    else {
+      console.log("too many spymasters")
+    }
+  }
 
   render() { 
     const { cardList } = this.state;
@@ -50,15 +73,23 @@ class GameBoard extends Component {
     if (!this.state.isLoading) {
       console.log("render gameBoard")
       return ( 
-        <div className="gameBoardGrid">
-          {cardList.map(cardRefID => {
-            return (
-              <Card
-                cardRefID={cardRefID}
-                cardFlipHandler={async (cardID) => {await GameApi.flipCard(cardID)}}
-              />
-            );
-          })}
+        <div className="game">
+          <div className="gameBoardGrid">
+            {cardList.map(cardRefID => {
+              return (
+                <Card
+                  cardRefID={cardRefID}
+                  cardFlipHandler={async (cardID) => {await GameApi.flipCard(cardID)}}
+                  spymaster={this.state.spymaster}
+                />
+              );
+            })}
+          </div>
+          <div className="bottomBar">
+            <Button type="submit" variant="contained" onClick={() => this.becomeSpymaster(this.props.gameRefID)} >
+              Become Spymaster
+            </Button>
+          </div>
         </div>
       );
     }

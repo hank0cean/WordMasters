@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
 import GameBoard from './gameBoard'
 import GameNavbar from './gameNavbar'
@@ -6,20 +6,15 @@ import GameNavbar from './gameNavbar'
 import './../styles/gameContainer.css'
 
 
-class GameContainer extends Component {
-	constructor(props) {
-		super(props);
-		this.gameRefID = this.props.match.params.gameRefID;
-	}
+function GameContainer(props) {
+	const [gameRefID] = useState(props.match.params.gameRefID);
 
-	render() { 
-		return ( 
-			<div className="gameContainer">
-				<GameNavbar gameRefID={this.gameRefID} />
-				<GameBoard gameRefID={this.gameRefID} />
-			</div>
-		);
-	}
+	return ( 
+		<div className="gameContainer">
+			<GameNavbar gameRefID={gameRefID} />
+			<GameBoard gameRefID={gameRefID} />
+		</div>
+	);
 }
  
 export default GameContainer;

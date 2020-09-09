@@ -83,6 +83,7 @@
   filter: grayscale(100%) opacity(0.7);
   transform: translateZ(1);
   transition: var(--transition-speed);
+  z-index: 3;
 }
 
 .dropdownToggle:hover, .dropdownToggle.active {
@@ -90,53 +91,74 @@
   background-color: var(--bg-secondary);
   color: var(--text-secondary);
   cursor: pointer;
+  z-index: 3;
 }
 
-@keyframes dropdown {
-  from {
-    opacity: 0;
-    height: 0%;
-    width: 100%;
-    margin: 0rem;
-    padding: 0rem;
-  }
-  to {
-    opacity: 1;
-    height: auto;
-    width: 100%;
-    margin: 1rem;
-    padding: 1rem;
-  }
+.dropdownToggle svg {
+  width: 2rem;
+  min-width: 1rem;
+  margin: 0 1.5rem;
+}
+
+.dropdownToggle svg {
+  width: 2rem;
+  min-width: 1rem;
+  margin: 0 1.5rem;
 }
 
 .navbar-dropdown-enter {
-  background-color: var(--bg-secondary);
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  max-height: 4rem;
+  width: 100%;
 } 
 .navbar-dropdown-enter-active {
-  background-color: var(--bg-secondary);
+  position: relative;
+  opacity: 1;
+  max-height: 80vh;
+  width: 100%;
 }
 .navbar-dropdown-exit {
-  white-space: 1rem;
-  background-color: var(--bg-secondary);
+  position: relative;
+  top: 4rem;
+  opacity: 1;
+  max-height: 80vh;
+  width: 100%;
 }
 .navbar-dropdown-exit-active {
+  position: absolute;
+  top: 0;
   opacity: 0;
-  margin: 0rem;
-  padding: 0rem;
+  max-height: 4rem;
   width: 100%;
-  height: auto;
+}
+
+.dropdownContainer {
+  overflow: hidden;
+  z-index: 2;
+  margin: 1rem;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 1rem;
   background-color: var(--bg-secondary);
-  transition: all var(--transition-speed) ease;
 }
 
-.dropdownToggle svg {
-  width: 2rem;
-  min-width: 1rem;
-  margin: 0 1.5rem;
+.dropdownContainer > * {
+  z-index: inherit;
 }
 
-.dropdownToggle svg {
-  width: 2rem;
-  min-width: 1rem;
-  margin: 0 1.5rem;
+.dropdownContainer > * > * {
+  z-index: inherit;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
 }

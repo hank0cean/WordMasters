@@ -77,12 +77,13 @@ function Card(props) {
     setIsFlipped(cardData.isFlipped);
   })
 
-  GameApi.addListenerToCard(props.cardRefID, (snapshot) => {
+  GameApi.addListenerForRefChild('cards', props.cardRefID, 'child_changed', (snapshot) => {
     const cardData = snapshot.val();
     setWord(cardData.word);
     setColor(cardData.color);
     setIsFlipped(cardData.isFlipped);
   });
+
 
   return ( 
     <ButtonBase
@@ -90,7 +91,7 @@ function Card(props) {
       variant="outlined"
       onClick={() => GameApi.flipCard(props.cardRefID)}
       className={classes.card}
-      style={isFlipped ? cardColorStyle(color) : {}}
+      style={isFlipped || props.spymaster ? cardColorStyle(color) : {}}
     >
       <Typography
         variant="subtitle1"
