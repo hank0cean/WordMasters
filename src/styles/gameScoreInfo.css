@@ -1,0 +1,62 @@
+
+.gameScoreInfo {
+  display: flex;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  flex-direction: row;
+  align-items: center;
+}
+
+.scoreLabel {
+  white-space: nowrap;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.gameNavbar .scoreLabel {
+  display: none;
+}
+
+.gameNavbar.active .scoreLabel {
+  display: inline;
+  animation: slidein 1s;
+}
+
+.gameNavbar:hover .scoreLabel {
+  display: inline;
+  animation: slidein 500ms;
+}
+
+.redScore {
+  display: inline;
+  color: #ba000d;
+  margin: 4px;
+}
+
+.blueScore {
+  display: inline;
+  color: #1D39F5;
+  margin: 4px;
+}
+
+.highlight {
+  padding: 0.5rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.2rem;
+  background-color: var(--bg-secondary);
+  border-radius: 50%;
+}
+
+@keyframes slidein {
+  from {
+    opacity: 0;
+    width: 0%;
+  }
+  to {
+    opacity: 1;
+    width: 90%;
+  }
+}

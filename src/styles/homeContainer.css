@@ -1,0 +1,28 @@
+
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-secondary);
+  height: 100vh;
+  width: 100vw;
+}
+
+.homeFormWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--text-secondary);
+  height: 25%;
+  width: 40%;
+  border-radius: 10px;
+  color: black;
+}
+
+.homeContainer form {
+  margin: 1rem;
+  width: 60%;
+}
+

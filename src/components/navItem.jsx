@@ -7,15 +7,14 @@ function NavItem(props){
 
   return ( 
     <li className={(props.iconLogo ? "navLogo" : "navItem")}>
-      <a
-        href={(props.itemLink ? props.itemLink : "javascript:void(0);")}
+      <div
         className={"dropdownToggle" + (props.itemIsActive ? ' active' : '')}
         onClick={props.handleClick}>
-          <span className="iconLeft">{props.iconLeft}</span>
-          <span className="linkText">{props.itemText}</span>
-          <span className="iconRight">{props.iconRight}</span>
-          <span className="iconLogo">{props.iconLogo}</span>
-      </a>
+          <div className="iconLeft">{props.iconLeft}</div>
+          <div className="itemText">{props.itemText}</div>
+          <div className="iconRight">{props.iconRight}</div>
+          <div className="iconLogo">{props.iconLogo}</div>
+      </div>
       <CSSTransition
         in={props.itemIsActive}
         unmountOnExit
