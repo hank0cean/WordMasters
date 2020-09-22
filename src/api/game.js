@@ -113,6 +113,7 @@ export default class GameApi {
    * @param {String} cardRefID  - Firebase database reference id for the Card.
    */
   static addSpymaster(gameRefID, second=false) {
+
     var updates = {};
 
     if (second) {
@@ -153,14 +154,14 @@ export default class GameApi {
    */
   static async newWordListFromDeck(deckName) {
     const deckRef = database.ref('decks').child(deckName);
-    let deckWordsRef = await deckRef.once('value');
+    let deckSnapshot = await deckRef.once('value');
     let deckWordList = new Array();
     let wordList = new Array(25);
     let deckSize = 0;
     let cardCount = 0;
     let deckIndex = 0;
 
-    deckWordsRef.forEach((wordRef) => {
+    deckSnapshot.forEach((wordRef) => {
       deckWordList.push(wordRef.val().word)
       deckSize++
     });
@@ -177,50 +178,48 @@ export default class GameApi {
 
   ////////////////////////////////////////////////////////////////////
  
-  static async pathHasDuplicate(path, value) {
+  static async pathHasDuplicate(ref, child, value) {
     let hasDuplicate;
 
-    console.log('path: ', path);
-
-    database.ref(path).equalTo(value).once('value')
-    .then((snapshot) => {
-      if (snapshot.val() === value) {
-        console.log("has duplicate")
+    database.ref(ref).child(child).equalTo(value).once('value')
+      .then((snapshot) => {
         console.log("snapshot.val(): ", snapshot.val());
-        console.log('value: ', value);
-        hasDuplicate = true;
-      }
-      else {
-        console.log("no duplicate")
-        console.log("snapshot.val(): ", snapshot.val());
-        console.log('value: ', value);
-        hasDuplicate = false;
-      }
-    })
-
+        if (snapshot.val() === value) {
+          console.log("has duplicate")
+          hasDuplicate = true;
+        }
+        else {
+          console.log("no duplicate")
+          hasDuplicate = false;
+        }
+      })
     return hasDuplicate;
   }
 
   static async addWordToDeck(deckName, newWord) {
-    const decksRef = database.ref('decks')
-    const deckRef = decksRef.child(deckName)
+    const deckRef = database.ref('decks').child(deckName)
 
-    let lastCardIndex = 0;
-    let isDuplicate = await this.pathHasDuplicate('decks/' + deckName + '/' + newWord.toLowerCase(), newWord.toLowerCase());
-
-    deckRef.limitToLast(1).on('child_added', (snapshot) => {
-      lastCardIndex = snapshot.val().index
-    })
+    // let isDuplicate = await this.pathHasDuplicate('words', 'standard/word', newWord.toLowerCase());
     
-    deckRef.orderByChild('word').equalTo(newWord.toLowerCase()).on('value', (snapshot) => {
-      if (snapshot.val().word === newWord.toLowerCase()) {
-        console.log("word is duplicate")
-        isDuplicate = true
-      }
-    })
-    if (isDuplicate === false) {
-      console.log("word is not a duplicate")
-      deckRef.push({index: lastCardIndex + 1, word: newWord.toLowerCase()});
-    }
+    const lastWordRef = await deckRef.limitToLast(1).once('value');
+    console.log("lastWordRef.val(): ", lastWordRef.val())
+    const lastWordObj = lastWordRef.val();
+    const lastWordIndex = lastWordObj.index;
+    console.log("lastwordOBJ: ", lastWordObj)
+
+    console.log("lastWordIndex: ", lastWordIndex)
+    
+    // console.log("isDuplicate: ", isDuplicate)
+
+    // deckRef.orderByChild('word').equalTo(newWord.toLowerCase()).on('value', (snapshot) => {
+    //   if (snapshot.val().word === newWord.toLowerCase()) {
+    //     console.log("word is duplicate")
+    //     isDuplicate = true
+    //   }
+    // })
+    // if (isDuplicate === false) {
+    //   console.log("word is not a duplicate")
+    //   deckRef.push({index: lastCardIndex + 1, word: newWord.toLowerCase()});
+    // }
   }
 }

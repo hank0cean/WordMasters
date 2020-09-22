@@ -1,17 +1,25 @@
 
 .game {
-  height: 100vh;
+  padding: 2rem;
+  padding-right: 3rem;
+  padding-bottom: 3rem;
 }
 
 .gameBoardGrid {
   display: grid;
+  height: 100%;
   grid-template-columns: repeat(5, minmax(10px, 400px));
   grid-template-rows: repeat(5, minmax(10px, 1fr));
-  padding: 2rem;
-  padding-right: 3rem;
-  padding-bottom: 3rem;
   gap: 4% 2%;
   float: none;
   z-index: 1;
 }
 
+.simpButton {
+  background-color: var(--bg-primary);
+  width: 12rem;
+  height: 4rem;
+  border-radius: 1rem;
+  margin: auto;
+  padding: auto;
+}

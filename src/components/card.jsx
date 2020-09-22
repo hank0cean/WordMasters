@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import GameApi from '../api/game'
 
-
 const useStyles = makeStyles((theme) => ({
   card: {
     backgroundColor: "#353535",
@@ -24,33 +23,24 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   cardText: {
-    fontSize: "1.3rem",
+    fontSize: "2vw",
     fontWeight: "bold",
+  },
+  flipped: {
+    visibility: "hidden",
   }
 }));
-
 
 const cardColorStyle = (color) => {
   switch (color) {
     case 'red':
-      return {
-        backgroundColor: "#ba000d",
-      }
+      return { backgroundColor: "#ba000d" }
     case 'blue':
-      return {
-        backgroundColor: "#1D39F5",
-      }
-  
+      return { backgroundColor: "#1D39F5" }
     case 'black':
-      return {
-        backgroundColor: "#000000",
-      }
-  
+      return { backgroundColor: "#000000" }
     default:
-      return {
-        color: "#000000",
-        backgroundColor: "#F9F990",
-      }
+      return { color: "#000000", backgroundColor: "#F9F990" }
   }
 }
 
@@ -58,7 +48,7 @@ function Card(props) {
   /*
     props.card          (1 card of 25 from cardList pulled from selectedDeck)
               .cardID       (card database ref id)
-              .word     
+              .word         
               .color        (['none', 'red', 'blue', 'black'])
               .isFlipped    (true / false)
               .gameRefID    (associated game database ref id)
@@ -84,18 +74,17 @@ function Card(props) {
     setIsFlipped(cardData.isFlipped);
   });
 
-
   return ( 
     <ButtonBase
       color="primary"
       variant="outlined"
-      onClick={() => GameApi.flipCard(props.cardRefID)}
+      onClick={(props.spymaster ? {} : () => GameApi.flipCard(props.cardRefID))}
       className={classes.card}
       style={isFlipped || props.spymaster ? cardColorStyle(color) : {}}
     >
       <Typography
         variant="subtitle1"
-        className={classes.cardText}
+        className={(isFlipped ? classes.flipped : classes.cardText)}
       >
         {word}
       </Typography>

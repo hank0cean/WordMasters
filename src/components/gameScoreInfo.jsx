@@ -25,9 +25,6 @@ function GameScoreInfo(props) {
 
   return (
     <div className="gameScoreInfo">
-      <div className="scoreLabel">
-        Cards Left:
-      </div>
       <div className={"redScore " + (redTurn ? "highlight" : "")}>
         {(redScore ? redScore : 0)}
       </div>
