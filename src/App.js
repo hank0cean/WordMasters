@@ -2,9 +2,9 @@ import React from 'react'
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
 } from 'react-router-dom'
-import LoginContainer from './components/loginContainer'
+import HomeContainer from './components/homeContainer'
 import GameContainer from './components/gameContainer'
 import './styles/App.css'
 
@@ -13,12 +13,15 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/login">
-            <LoginContainer />
-          </Route>
-          <Route path="/game">
-            <GameContainer />
-          </Route>
+          <Route
+            exact
+            path="/"
+            component={HomeContainer}
+          />
+          <Route
+            path="/game/:gameRefID"
+            component={GameContainer}
+          />
         </Switch>
       </Router>
     </div>

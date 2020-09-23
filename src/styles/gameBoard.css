@@ -1,4 +1,8 @@
 
+.game {
+  height: 100vh;
+}
+
 .gameBoardGrid {
   display: grid;
   grid-template-columns: repeat(5, minmax(10px, 400px));
@@ -10,3 +14,4 @@
   float: none;
   z-index: 1;
 }
+

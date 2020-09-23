@@ -1,8 +1,11 @@
 
 .navLogo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   font-weight: bold;
+  white-space: nowrap;
   text-transform: uppercase;
-  margin-bottom: 1rem;
   text-align: center;
   color: var(--text-secondary);
   background: var(--bg-secondary);
@@ -11,7 +14,50 @@
   width: 100%;
 }
 
+.itemText {
+  animation: slideout 500ms 1 forwards;
+}
+
+.gameNavbar.active .itemText {
+  display: inline;
+  white-space: nowrap;
+  margin-left: 1rem;
+  animation: slidein 1s
+}
+
+.gameNavbar:hover .itemText {
+  display: inline;
+  white-space: nowrap;
+  margin-left: 1rem;
+  animation: slidein 1s;
+}
+
+
+@keyframes slidein {
+  from {
+    opacity: 0;
+    width: 0px;
+  }
+  to {
+    opacity: 1;
+    width: 100%;
+  }
+}
+
+@keyframes slideout {
+  from {
+    opacity: 1;
+    width: 100%;
+  }
+  to {
+    opacity: 0;
+    width: 0px;
+  }
+}
+
+
 .navLogo svg {
+  width: 2rem;
   transform: rotate(0deg);
   transition: var(--transition-speed);
 }
@@ -31,75 +77,88 @@
 .dropdownToggle {
   display: flex;
   align-items: center;
-  height: 5rem;
+  height: 4rem;
   color: var(--text-primary);
   text-decoration: none;
   filter: grayscale(100%) opacity(0.7);
+  transform: translateZ(1);
   transition: var(--transition-speed);
+  z-index: 3;
 }
 
 .dropdownToggle:hover, .dropdownToggle.active {
   filter: grayscale(0%) opacity(1);
   background-color: var(--bg-secondary);
   color: var(--text-secondary);
-}
-
-.navbar-dropdown-enter {
-  opacity: 0;
-  width: 100%;
-  height: auto;
-  background-color: var(--bg-secondary);
-} 
-.navbar-dropdown-enter-active {
-  opacity: 1;
-  margin: 1rem;
-  padding: 1rem;
-  display: block;
-  width: 18rem;
-  height: auto;
-  border-radius: 25px;
-  background-color: var(--bg-secondary);
-  transition: all var(--transition-speed) ease-in;
-}
-.navbar-dropdown-enter-done {
-  opacity: 1;
-  margin: 1rem;
-  padding: 1rem;
-  display: block;
-  width: 18rem;
-  height: auto;
-  border-radius: 25px;
-  background-color: var(--bg-secondary);
-  transition: all var(--transition-speed) ease-in;
-}
-.navbar-dropdown-exit {
-  white-space: 1rem;
-  margin: 1rem;
-  padding: 1rem;
-  display: block;
-  width: 18rem;
-  height: auto;
-  border-radius: 25px;
-  background-color: var(--bg-secondary);
-  transition: all var(--transition-speed) ease;
-}
-.navbar-dropdown-exit-active {
-  opacity: 0;
-  margin: 0rem;
-  padding: 0rem;
-  width: 100%;
-  height: auto;
-  background-color: var(--bg-secondary);
-  transition: all var(--transition-speed) ease;
+  cursor: pointer;
+  z-index: 3;
 }
 
 .dropdownToggle svg {
   width: 2rem;
-  min-width: 2rem;
+  min-width: 1rem;
   margin: 0 1.5rem;
 }
 
-.linkText {
-  display: none;
-  margin-left: 1rem;
+.dropdownToggle svg {
+  width: 2rem;
+  min-width: 1rem;
+  margin: 0 1.5rem;
+}
+
+.navbar-dropdown-enter {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  max-height: 4rem;
+  width: 100%;
+} 
+.navbar-dropdown-enter-active {
+  position: relative;
+  opacity: 1;
+  max-height: 80vh;
+  width: 100%;
+}
+.navbar-dropdown-exit {
+  position: relative;
+  top: 4rem;
+  opacity: 1;
+  max-height: 80vh;
+  width: 100%;
+}
+.navbar-dropdown-exit-active {
+  position: absolute;
+  top: 0;
+  opacity: 0;
+  max-height: 4rem;
+  width: 100%;
+}
+
+.dropdownContainer {
+  overflow: hidden;
+  z-index: 2;
+  margin: 1rem;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 1rem;
+  background-color: var(--bg-secondary);
+}
+
+.dropdownContainer > * {
+  z-index: inherit;
+}
+
+.dropdownContainer > * > * {
+  z-index: inherit;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
 }
