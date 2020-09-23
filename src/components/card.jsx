@@ -65,11 +65,46 @@ function Card(props) {
     
     props.cardRefID   (card database ref id)
   */
+
+  /**
+   * Since setWord, setColor and setIsFlipped are all being called together based on the cardData
+   * snapshot I would suggest using one useState hook thats represents the cardData snapshot
+   * and initialing it to null. This would reduce the number on times that Card component updates and simplifies abstraction
+   * 
+   * ex)
+   * 
+   * const [card, setCard] = useState(null)
+   * 
+   * ...then((snapshot) => {
+   *  const cardData = snapshot.val();
+   *  setCard(cardData)
+   * })
+   * 
+   */
   const [word, setWord] = useState('');
   const [color, setColor] = useState('');
   const [isFlipped, setIsFlipped] = useState(false);
   const classes = useStyles();
 
+  /**
+   * Both the following functions are going to be called ever time it's props or state update.
+   * Since they are doing this same thing and only need to be called on the initial render, consider
+   * just calling the GameApi.addListenerForRefChild once the component is mounted.
+   * 
+   * To do this with hooks use a useEffect hook that has an empty dependency array. This will only invoke the
+   * wrapped function on mount, similar to a class component's componentDidMount function. Additionally, you can 
+   * return a function that will be invoked when the component unmounts. This would be a good place to remove card
+   * listeners.
+   * 
+   * ex)
+   * 
+   * useEffect(() => {
+   *  GameApi.addListenerForRefChild('cards', props.cardRefID, 'child_changed', (snapshot) => {
+   *     const cardData = snapshot.val();
+   *     setCard(cardData);
+   *  return () => GameApi.removeListenerForRefChild('cards', props.cardRefID)
+   * },[])
+   */
   GameApi.getCardRefByID(props.cardRefID).then((snapshot) => {
     const cardData = snapshot.val();
     setWord(cardData.word);

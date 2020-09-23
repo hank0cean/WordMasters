@@ -10,6 +10,17 @@ function teamListBox(teamName, playerList) {
     <div className="teamListBox">
       <p>{teamName} Team</p>
       <p>--------</p>
+      {/* 
+        Instead of checking if playerList is a truthy value check if it's a non-empty array 
+
+        This is a utility function I use frequently
+
+        function isNonemptyArray(arr){
+          return Array.isArray(arr) && arr.length > 0
+        }
+
+        Additionally add a unique key prop to each child
+      */}
       {(playerList ?  playerList.map((player) => (
         <p>{player}</p>
       )) : <p>No Players</p>)}
@@ -24,6 +35,12 @@ function teamListBox(teamName, playerList) {
     </div>
   );
 }
+
+/**
+ * 
+ * Look at the comments in './gameBoard.jsx' for managing state
+ * and removing access fetches for getting the gameObj from firebase
+ */
 
 function TeamsDropdown(props) {
 

@@ -22,6 +22,17 @@ function App() {
             path="/game/:gameRefID"
             component={GameContainer}
           />
+          {/* 
+            As a best practice you should provide a Route with a path prop = "*" to catch/redirect invalid paths
+            
+            ex)
+            <Route
+              path="*"
+              component={404Page}
+            />
+
+            In the apps current state I think you could just use your HomeContainer so all invalid paths are routed to your start screen
+          */}
         </Switch>
       </Router>
     </div>
