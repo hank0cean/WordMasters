@@ -11,13 +11,13 @@ function GameContainer(props) {
 	const [username, setUsername] = useState();
 	const [spymaster, setSpymaster] = useState();
 
-	return ( 
+	return (
 		<div className="gameContainer">
-			<GameNavbar gameRefID={gameRefID} setSpymaster={setSpymaster} />
-			<GameBoard gameRefID={gameRefID} spymaster={spymaster} />
+			<GameNavbar gameRefID={gameRefID} setSpymaster={setSpymaster} setUsername={setUsername} />
+			<GameBoard gameRefID={gameRefID} spymaster={spymaster} username={username} />
 		</div>
 	);
-}
+}          
 
 export default GameContainer;
 

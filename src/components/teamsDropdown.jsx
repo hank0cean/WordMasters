@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button } from '@material-ui/core';
+import InputPopup from './inputPopup';
 
 import './../styles/teamsDropdown.css'
 import GameApi from '../api/game';
@@ -15,10 +16,13 @@ function teamListBox(teamName, playerList) {
       )) : <p>No Players</p>)}
       {(teamName === 'Blue' ? 
         <Box ml="0.5rem" my="1rem">
-          <Button variant="contained" color="primary">Join Blue</Button>
+          <InputPopup buttonText="Join Blue" buttonColor="primary">
+          </InputPopup>
         </Box>
       : <Box my="1rem">
-          <Button variant="contained" color="secondary">Join Red</Button>
+          <InputPopup buttonText="Join Red" buttonColor="secondary">
+
+          </InputPopup>
         </Box>
       )}
     </div>
@@ -62,5 +66,5 @@ function TeamsDropdown(props) {
     </div>
   );
 }
- 
+
 export default TeamsDropdown;

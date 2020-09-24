@@ -39,7 +39,6 @@ function GameBoard(props) {
             return (
               <Card
                 cardRefID={cardRefID}
-                cardFlipHandler={async (cardID) => {await GameApi.flipCard(cardID)}}
                 spymaster={props.spymaster}
               />
             );
