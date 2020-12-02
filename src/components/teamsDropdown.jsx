@@ -52,6 +52,8 @@ function TeamsDropdown(props) {
         });
       }
     });
+
+    return () => GameApi.removeListenerForRefChild('games', props.gameRefID, 'value')
   }, []);
 
   return (

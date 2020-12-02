@@ -73,8 +73,13 @@ export default class GameApi {
     database.ref(ref).child(refID).on(eventType, (snapshot) => {func(snapshot.val())})
   }
 
-  static async removeListenerForRefChild(ref, refID, eventType='value', func) {
-    database.ref(ref).child(refID).off(eventType, func)
+  static async removeListenerForRefChild(ref, refID, eventType='value', func=null) {
+    if (func) {
+      database.ref(ref).child(refID).off(eventType, func)
+    }
+    else {
+      database.ref(ref).child(refID).off(eventType)
+    }
   }
 
   /**
