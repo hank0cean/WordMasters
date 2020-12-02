@@ -14,9 +14,13 @@ function NavItem(props) {
           <div className="iconRight">{props.iconRight}</div>
           <div className="iconLogo">{props.iconLogo}</div>
       </div>
-      <div className={"dropdownContainer" + (props.itemIsActive ? ' active' : '')}>
-        {props.children}
-      </div>
+      {props.itemIsActive ? 
+        <div className={"dropdownContainer" + (props.itemIsActive ? ' active' : '')}>
+          {props.children}
+        </div>
+        :
+        <div></div>
+      }
     </li>
   );
 }

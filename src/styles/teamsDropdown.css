@@ -2,7 +2,7 @@
 .teamsDropdown {
   text-align: center;
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,12 +17,25 @@
 .teamListBox {
   display: flex;
   flex-direction: column;
-
 }
 
 .teamListBox {
   display: flex;
   flex-direction: column;
+}
+
+.teamNameHeader {
+  color: gray;
+  text-transform: uppercase;
+  margin: 0.5rem;
+}
+
+p {
+  margin: 0.5rem;
+}
+
+.stickBottom {
+  margin-top: auto;
 }
 
 .verticalDivider {

@@ -22,6 +22,10 @@ function App() {
             path="/game/:gameRefID"
             component={GameContainer}
           />
+          <Route 
+            path="*"
+            component={HomeContainer}
+          />
         </Switch>
       </Router>
     </div>

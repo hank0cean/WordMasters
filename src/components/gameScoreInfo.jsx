@@ -2,35 +2,42 @@ import React, { useState } from 'react';
 
 import GameApi from '../api/game';
 import './../styles/gameScoreInfo.css'
+import { useEffect } from 'react';
 
 function GameScoreInfo(props) {
 
-  const [blueScore, setBlueScore] = useState('');
-  const [redScore, setRedScore] = useState('');
-  const [redTurn, setRedTurn] = useState();
+  const [gameInfo, setGameInfo] = useState({
+    blueScore: '',
+    redScore: '',
+    redTurn: false,
+  })
 
-  GameApi.addListenerForRefChild('games', props.gameRefID, 'child_changed', (snapshot) => {
-    const gameObj = snapshot.val();
-    setRedScore(gameObj.redScore);
-    setBlueScore(gameObj.blueScore);
-    setRedTurn(gameObj.redTurn);
-  });
+  function setGameScoreInfo(gameObj) {
+    if (gameObj.blueScore !== gameInfo.blueScore || gameObj.redScore !== gameInfo.redScore || gameObj.redTurn !== gameInfo.redTurn) {
+      setGameInfo({
+        blueScore: gameObj.blueScore,
+        redScore: gameObj.redScore,
+        redTurn: gameObj.redTurn,
+      })
+    }
+  }
 
-  GameApi.findGameByID(props.gameRefID)
-    .then((gameObj) => {
-      setRedScore(gameObj.redScore);
-      setBlueScore(gameObj.blueScore);
-      setRedTurn(gameObj.redTurn);
-    })
+  useEffect(() => {
+    GameApi.addListenerForRefChild('games', props.gameRefID, 'value', setGameScoreInfo);
+
+    return () => {
+      GameApi.removeListenerForRefChild('games', props.gameRefID, 'value', setGameScoreInfo)
+    };
+  }, []);
 
   return (
     <div className="gameScoreInfo">
-      <div className={"redScore " + (redTurn ? "highlight" : "")}>
-        {(redScore ? redScore : 0)}
+      <div className={"redScore " + (gameInfo.redTurn ? "highlight" : "")}>
+        {(gameInfo.redScore ? gameInfo.redScore : 0)}
       </div>
       -
-      <div className={"blueScore " + (!redTurn ? "highlight" : "")}>
-        {(blueScore ? blueScore : 0)}
+      <div className={"blueScore " + (!gameInfo.redTurn ? "highlight" : "")}>
+        {(gameInfo.blueScore ? gameInfo.blueScore : 0)}
       </div>
     </div>
   );

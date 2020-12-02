@@ -4,45 +4,42 @@ import Card from './card';
 import GameApi from '../api/game';
 import '../styles/gameBoard.css';
 
-function GameBoard(props) {
+function GameBoard({gameRefID, spymaster}) {
 
-  const [isLoading, setIsLoading] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const [cardList, setCardList] = useState([]);
 
   useEffect(() => {
-    getCardListByGameID(props.gameRefID);
-  })
+    if (isLoading) {
+      getCardListByGameID(gameRefID);
+    }
+  });
 
 	function getCardListByGameID(gameRefID) {
     GameApi.getCardsByGameID(gameRefID)
-    .then((cardsSnapshot) => {
-      const cardsObject = cardsSnapshot.val();
-
+    .then((cardsObject) => {
       if (cardsObject) {
-        const cardList = Object.keys(cardsObject).map(key => (key))
-        setIsLoading(false);
+        const cardList = Object.keys(cardsObject);
         setCardList(cardList);
       }
       else {
-        setIsLoading(false);
         setCardList(null);
       }
+      setIsLoading(false);
     })
   }
-    
+
   if (!isLoading) {
-    console.log("render gameBoard")
     return ( 
       <div className="game">
         <div className="gameBoardGrid">
-          {cardList.map(cardRefID => {
-            return (
-              <Card
-                cardRefID={cardRefID}
-                spymaster={props.spymaster}
-              />
-            );
-          })}
+          {cardList.map(cardRefID => 
+            <Card
+              key={cardRefID}
+              cardRefID={cardRefID}
+              spymaster={spymaster}
+            />
+          )}
         </div>
       </div>
     );

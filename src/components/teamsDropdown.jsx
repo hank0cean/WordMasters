@@ -1,60 +1,65 @@
-import React, { useState } from 'react';
-import { Box, Button } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import { Box, Button, Typography } from '@material-ui/core';
 import InputPopup from './inputPopup';
+import JoinTeamInput from './joinTeamInput';
 
 import './../styles/teamsDropdown.css'
 import GameApi from '../api/game';
 
-function teamListBox(teamName, playerList) {
+function teamListBox(gameRefID, teamName, playerList) {
+  
+  console.log("playerList: ", playerList)
 
   return (
     <div className="teamListBox">
-      <p>{teamName} Team</p>
-      <p>--------</p>
-      {(playerList ?  playerList.map((player) => (
-        <p>{player}</p>
+      <h4 className="teamNameHeader">{teamName + " Team"}</h4>
+      {(playerList ?  playerList.map(({key, name}) => (
+        <div key={key}>{name}</div>
       )) : <p>No Players</p>)}
-      {(teamName === 'Blue' ? 
-        <Box ml="0.5rem" my="1rem">
-          <InputPopup buttonText="Join Blue" buttonColor="primary">
-          </InputPopup>
-        </Box>
-      : <Box my="1rem">
-          <InputPopup buttonText="Join Red" buttonColor="secondary">
-
-          </InputPopup>
-        </Box>
-      )}
+      <div className="stickBottom">
+        {(teamName === 'Blue' ? 
+          <Box ml="0.5rem" my="1rem">
+            <InputPopup buttonText="Join Blue" buttonColor="primary">
+              <JoinTeamInput teamName="blue" gameRefID={gameRefID} />
+            </InputPopup>
+          </Box>
+        : <Box my="1rem">
+            <InputPopup buttonText="Join Red" buttonColor="secondary">
+              <JoinTeamInput teamName="red" gameRefID={gameRefID} />
+            </InputPopup>
+          </Box>
+        )}
+      </div>
     </div>
   );
 }
 
 function TeamsDropdown(props) {
 
-  const [redTeam, setRedTeam] = useState();
-  const [blueTeam, setBlueTeam] = useState();
-  const [redTurn, setRedTurn] = useState();
-
-  GameApi.addListenerForRefChild('games', props.gameRefID, 'child_changed', (snapshot) => {
-    const gameObj = snapshot.val();
-    setRedTeam(gameObj.redTeam);
-    setBlueTeam(gameObj.blueTeam);
-    setRedTurn(gameObj.redTurn);
+  const [gameObj, setGameObj] = useState({
+    blueTeam: [],
+    redTeam: [],
+    redTurn: false,
   });
 
-  GameApi.findGameByID(props.gameRefID)
-    .then((gameObj) => {
-      setRedTeam(gameObj.redTeam);
-      setBlueTeam(gameObj.blueTeam);
-      setRedTurn(gameObj.redTurn);
+  useEffect(() => {
+    GameApi.addListenerForRefChild('games', props.gameRefID, 'value', (gameData) => {
+      if (gameData !== gameObj) {
+        setGameObj({
+          blueTeam: gameData.blueTeam,
+          redTeam: gameData.redTeam,
+          redTurn: gameData.redTurn,
+        });
+      }
     });
+  }, []);
 
   return (
     <div className="teamsDropdown">
       <div className="teamsInfo">
-        {teamListBox("Red", redTeam)}
+        {teamListBox(props.gameRefID, "Red", gameObj.redTeam)}
         <div className="verticalDivider" />
-        {teamListBox("Blue", blueTeam)}
+        {teamListBox(props.gameRefID, "Blue", gameObj.blueTeam)}
       </div>
       <div className="horizontalDivider" />
       <Box mt="1rem">

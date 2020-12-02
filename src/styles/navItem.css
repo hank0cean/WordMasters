@@ -140,10 +140,6 @@
 
 .dropdownContainer.active {
   display: inline!important;
-  margin: 1rem!important;
-  padding: 1rem!important;
-  border-radius: 1rem!important;
-  animation: dropdown 1s !important;
 }
 
 @keyframes dropdown {

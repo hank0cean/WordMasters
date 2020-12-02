@@ -5,14 +5,12 @@ import GameApi from '../api/game'
 
 import '../styles/homeContainer.css'
 
-function HomeContainer(props) {
+function HomeContainer() {
   let history = useHistory();
   const [roomName, setRoomName] = useState('');
 
   async function createGame() {
-    console.log(`creating game... (${roomName})`)
     const gameRefID = await GameApi.createGame(roomName)
-    console.log(`created gameRef id: ${gameRefID}`)
     history.push(`/game/${gameRefID}`)
   }
 
@@ -23,7 +21,6 @@ function HomeContainer(props) {
       </div>
       <div className="homeFormWrapper">
         <form onSubmit={createGame}>
-          
           <TextField
             autoComplete='off'
             id="roomNameInput"
@@ -42,8 +39,7 @@ function HomeContainer(props) {
           variant="contained"
           onClick={createGame}
           size='large'
-          color='inherit'
-          >
+          color='inherit'>
             Create Game
         </Button>
       </div>

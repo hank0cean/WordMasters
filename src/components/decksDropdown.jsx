@@ -93,8 +93,8 @@ function DecksDropdown(props) {
           className={styles.button}
           variant="contained"
           onClick={() => {
-            setNewWord('')
             addWordToDeck(currentDeck, newWord)
+            setNewWord('')
           }}
         >
             Add Word

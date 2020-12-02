@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ButtonBase, Typography } from '@material-ui/core'
+import React, { useState, useEffect } from 'react';
+import { ButtonBase } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
 import GameApi from '../api/game'
@@ -14,20 +14,20 @@ const useStyles = makeStyles((theme) => ({
     border: "3px solid",
     borderRadius: 8,
     borderColor: "#202020",
-    transition: "all 750ms",
+    transition: "all 500ms",
     overflow: "hidden",
     textTransform: "capitalize",
+    fontSize: "1.8vw",
+    fontWeight: "bold",
     '&:hover': {
+      fontSize: "1.8vw",
+      fontWeight: "bold",
       boxShadow: "rgba(2, 8, 20, 0.1) 0px 0.35rem 1.175rem, rgba(2, 8, 20, 0.08) 0px 0.175rem 0.5rem",
       transform: "translateY(1px) scale(1.15)",
     }
   },
-  cardText: {
-    fontSize: "2vw",
-    fontWeight: "bold",
-  },
   flipped: {
-    visibility: "hidden",
+    fontSize: "0rem",
   }
 }));
 
@@ -45,49 +45,31 @@ const cardColorStyle = (color) => {
 }
 
 function Card(props) {
-  /*
-    props.card          (1 card of 25 from cardList pulled from selectedDeck)
-              .cardID       (card database ref id)
-              .word         
-              .color        (['none', 'red', 'blue', 'black'])
-              .isFlipped    (true / false)
-              .gameRefID    (associated game database ref id)
-    
-    props.cardRefID   (card database ref id)
-  */
-  const [word, setWord] = useState('');
-  const [color, setColor] = useState('');
-  const [isFlipped, setIsFlipped] = useState(false);
+
+  const [card, setCard] = useState({
+    word: '',
+    color: '',
+    isFlipped: false,
+  });
   const classes = useStyles();
 
-  GameApi.getCardRefByID(props.cardRefID).then((snapshot) => {
-    const cardData = snapshot.val();
-    setWord(cardData.word);
-    setColor(cardData.color);
-    setIsFlipped(cardData.isFlipped);
-  })
+  useEffect(() => {
+    GameApi.addListenerForRefChild('cards', props.cardRefID, 'value', (cardData) => {
+      if (cardData !== card) {
+        setCard(cardData);
+      }
+    });
+  }, []);
 
-  GameApi.addListenerForRefChild('cards', props.cardRefID, 'child_changed', (snapshot) => {
-    const cardData = snapshot.val();
-    setWord(cardData.word);
-    setColor(cardData.color);
-    setIsFlipped(cardData.isFlipped);
-  });
-
-  return ( 
+  return (
     <ButtonBase
       color="primary"
       variant="outlined"
-      onClick={(props.spymaster ? {} : () => GameApi.flipCard(props.cardRefID))}
-      className={classes.card}
-      style={isFlipped || props.spymaster ? cardColorStyle(color) : {}}
+      onClick={props.spymaster || card.isFlipped ? () => {} : () => GameApi.flipCard(props.cardRefID)}
+      className={`${classes.card} ${(card.isFlipped ? classes.flipped : '')}`}
+      style={card.isFlipped || props.spymaster ? cardColorStyle(card.color) : {}}
     >
-      <Typography
-        variant="subtitle1"
-        className={(isFlipped ? classes.flipped : classes.cardText)}
-      >
-        {word}
-      </Typography>
+      {card.word}
     </ButtonBase>
   );
 }

@@ -5,19 +5,31 @@ import GameNavbar from './gameNavbar'
 
 import './../styles/gameContainer.css'
 
-
-function GameContainer(props) {
-	const [gameRefID] = useState(props.match.params.gameRefID);
+// Object destructuring gameRefID from props.match.params.gameRefID
+function GameContainer({match: {params: {gameRefID}}}) {
 	const [username, setUsername] = useState();
 	const [spymaster, setSpymaster] = useState();
 
+	useEffect(() => {
+		// check if username is the same as the spymaster on the db
+		// 			if username matches set spymaster to true
+	}, [username])
+
 	return (
 		<div className="gameContainer">
-			<GameNavbar gameRefID={gameRefID} setSpymaster={setSpymaster} setUsername={setUsername} />
-			<GameBoard gameRefID={gameRefID} spymaster={spymaster} username={username} />
+			<GameNavbar
+				gameRefID={gameRefID}
+				setSpymaster={setSpymaster}
+				setUsername={setUsername}
+			/>
+			<GameBoard
+				gameRefID={gameRefID}
+				spymaster={spymaster}
+				username={username}
+			/>
 		</div>
 	);
-}          
+}
 
 export default GameContainer;
 

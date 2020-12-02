@@ -14,8 +14,8 @@ export default class GameApi {
     const gameObj = {
       roomName: roomName,
       playerList: [],
-      redTeamList: [],
-      blueTeamList: [],
+      redTeam: [],
+      blueTeam: [],
       redScore: (redTurn ? 9 : 8),
       blueScore: (redTurn ? 8 : 9),
       redTurn: redTurn,
@@ -44,16 +44,37 @@ export default class GameApi {
   }
 
   /**
+   * 
+   */
+  static joinTeam(gameRefID, teamName, username) {
+    var updates = {}
+
+    GameApi.findGameByID(gameRefID)
+    .then((gameObj) => {
+      let currentTeam = (teamName === 'red' ? gameObj.redTeam : gameObj.blueTeam)
+      console.log("currentTeam: ", currentTeam);
+      (currentTeam ? currentTeam.push({key: '10', name: username}) : currentTeam = [{key: '10', name: username}]);
+      console.log("newTeam: ", currentTeam);
+      updates['/games/' + gameRefID + '/' + teamName + 'Team'] = currentTeam;
+      database.ref().update(updates);
+    })
+  }
+
+  /**
    * Add a function to a Firebase database listener that
-   *    runs when the child changes on the db.
+   *    runs when the eventType happens on the db.
    * 
    * @param   {String}    ref         - Name of firebase reference's root.
    * @param   {String}    refID       - Firebase database reference id.
    * @param   {String}    eventType   - Firebase reference .on(eventType).
-   * @param   {Function}  func        - Callback function for the listener.
+   * @param   {Function}  func        - Callback function to run when the listener is triggered.
    */
   static async addListenerForRefChild(ref, refID, eventType='value', func) {
-    database.ref(ref).child(refID).on(eventType, (snapshot) => {func(snapshot)})
+    database.ref(ref).child(refID).on(eventType, (snapshot) => {func(snapshot.val())})
+  }
+
+  static async removeListenerForRefChild(ref, refID, eventType='value', func) {
+    database.ref(ref).child(refID).off(eventType, func)
   }
 
   /**
@@ -101,14 +122,16 @@ export default class GameApi {
   /**
    * Retrieves value associatied with the given Firebase database reference id.
    * 
-   * @param {String} cardRefID  - Firebase database reference id for the Card.
+   * @param   {String} cardRefID  - Firebase database reference id for the Card.
+   * 
+   * @returns {Object}            - Firebase database object .val() 
    */
   static async getCardRefByID(cardRefID) {
     return await database.ref('cards').child(cardRefID).once('value');
   }
 
   /**
-   * Change 'isFlipped' value to True on card with given reference id.
+   * Change a 'spymaster' value to True
    * 
    * @param {String} cardRefID  - Firebase database reference id for the Card.
    */
@@ -138,13 +161,17 @@ export default class GameApi {
     database.ref().update(updates);
   }
 
-  /**
+  /** 
    * Retrieves values from cards database that have a matching game reference id.
    * 
-   * @param {String} gameRefID    - Firebase database reference id for the Card.
+   * @param   {String} gameRefID  - Firebase database reference id for the Card.
+   * 
+   * @returns {Object}            - Firebase database object .val() 
    */
   static async getCardsByGameID(gameRefID) {
-    return database.ref('cards').orderByChild('gameRefID').equalTo(gameRefID).once("value");
+    const cards = await database.ref('cards').orderByChild('gameRefID').equalTo(gameRefID).once("value");
+
+    return cards.val();
   }
 
   /**
@@ -165,7 +192,6 @@ export default class GameApi {
       deckWordList.push(wordRef.val().word)
       deckSize++
     });
-
     while (cardCount < 25) {
       deckIndex = randomNumber(deckIndex + 1, deckSize - 25 + cardCount);
       wordList[cardCount++] = deckWordList[deckIndex];
@@ -175,51 +201,63 @@ export default class GameApi {
     return wordList;
   }
 
-
-  ////////////////////////////////////////////////////////////////////
- 
+  /**
+   * Returns True/False if searching the given path & child yields a matching value
+   * 
+   * @param {String} ref Firebase database reference to search in
+   * @param {String} child Database reference child to search by
+   * @param {*} value Matching value to search for
+   * 
+   * @returns {Promise} True/False value
+   */
   static async pathHasDuplicate(ref, child, value) {
-    let hasDuplicate;
-
-    database.ref(ref).child(child).equalTo(value).once('value')
-      .then((snapshot) => {
-        console.log("snapshot.val(): ", snapshot.val());
-        if (snapshot.val() === value) {
-          console.log("has duplicate")
-          hasDuplicate = true;
+    // console.log(`pathHasDuplicate('${ref}', '${child}', ${value})`)
+    return new Promise(async (resolve, reject) => {
+      database.ref(ref).orderByChild(child).equalTo(value).once('value', (snapshot) => {
+        if (snapshot.exists()) {
+          const result = snapshot.val();
+          if (result[child] === value) {
+            // console.log(`has duplicate:\n\tchild: ${result[child]}\n\tmatches value: ${value}`)
+            resolve(true);
+          }
+          else {
+            resolve(false);
+          }
         }
         else {
-          console.log("no duplicate")
-          hasDuplicate = false;
+          // console.log("no snapshot: ");
+          // console.log(`has no duplicate:\n\tno child matches value: ${value}`)
+          resolve(false);
         }
-      })
-    return hasDuplicate;
+      });
+    })
   }
 
+  /**
+   * Adds newWord to the given deckName if the word does not already exist in that deck
+   * 
+   * @param {String} deckName Name of deck a word will be added to
+   * @param {String} newWord New word to be added to the deck
+   */
   static async addWordToDeck(deckName, newWord) {
-    const deckRef = database.ref('decks').child(deckName)
 
-    // let isDuplicate = await this.pathHasDuplicate('words', 'standard/word', newWord.toLowerCase());
+    // console.log(`addNewWordToDeck(${deckName}, ${newWord})`);
+
+    let isDuplicate = await this.pathHasDuplicate('decks/standard', 'word', newWord.toLowerCase())
     
-    const lastWordRef = await deckRef.limitToLast(1).once('value');
-    console.log("lastWordRef.val(): ", lastWordRef.val())
-    const lastWordObj = lastWordRef.val();
-    const lastWordIndex = lastWordObj.index;
-    console.log("lastwordOBJ: ", lastWordObj)
-
-    console.log("lastWordIndex: ", lastWordIndex)
-    
-    // console.log("isDuplicate: ", isDuplicate)
-
-    // deckRef.orderByChild('word').equalTo(newWord.toLowerCase()).on('value', (snapshot) => {
-    //   if (snapshot.val().word === newWord.toLowerCase()) {
-    //     console.log("word is duplicate")
-    //     isDuplicate = true
-    //   }
-    // })
-    // if (isDuplicate === false) {
-    //   console.log("word is not a duplicate")
-    //   deckRef.push({index: lastCardIndex + 1, word: newWord.toLowerCase()});
-    // }
+    if (isDuplicate === false) {
+      const deckRef = database.ref('decks').child(deckName)
+      const lastWordRef = await deckRef.limitToLast(1).once('child_added');
+      const lastWordObj = lastWordRef.val();
+      const lastWordIndex = lastWordObj.index;
+      deckRef.push({index: lastWordIndex + 1, word: newWord.toLowerCase()});
+    }
+    else {
+      // console.log("isDuplicate: ", isDuplicate)
+      // console.log("true")
+    }
   }
 }
+
+  ////////////////////////////////////////////////////////////////////
+
