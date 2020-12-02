@@ -1,21 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import GameBoard from './gameBoard'
 import GameNavbar from './gameNavbar'
 
 import './../styles/gameContainer.css'
 
+// Object destructuring gameRefID from props.match.params.gameRefID
+function GameContainer({match: {params: {gameRefID}}}) {
+	const [username, setUsername] = useState();
+	const [spymaster, setSpymaster] = useState();
 
-function GameContainer(props) {
-	const [gameRefID] = useState(props.match.params.gameRefID);
+	useEffect(() => {
+		// check if username is the same as the spymaster on the db
+		// 			if username matches set spymaster to true
+	}, [username])
 
-	return ( 
+	return (
 		<div className="gameContainer">
-			<GameNavbar gameRefID={gameRefID} />
-			<GameBoard gameRefID={gameRefID} />
+			<GameNavbar
+				gameRefID={gameRefID}
+				setSpymaster={setSpymaster}
+				setUsername={setUsername}
+			/>
+			<GameBoard
+				gameRefID={gameRefID}
+				spymaster={spymaster}
+				username={username}
+			/>
 		</div>
 	);
 }
- 
+
 export default GameContainer;
 
