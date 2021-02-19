@@ -17,7 +17,7 @@ function HomeContainer() {
   return (
     <div className="homeContainer">
       <div className="homeHeader">
-        <h1>Codenames.plus.plus</h1>
+        <h1>SpyWords</h1>
       </div>
       <div className="homeFormWrapper">
         <form onSubmit={createGame}>
