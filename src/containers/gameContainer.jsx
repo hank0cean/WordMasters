@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-import GameBoard from './gameBoard'
-import GameNavbar from './gameNavbar'
+import GameBoard from './../components/gameBoard'
+import GameNavbar from './../components/gameNavbar'
 
 import './../styles/gameContainer.css'
 

@@ -1,4 +1,4 @@
-import * as ActionTypes from './../actions'
+import { isLogged } from './../actions'
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
