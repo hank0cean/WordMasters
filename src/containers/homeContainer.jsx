@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import { Button, TextField } from '@material-ui/core'
-import GameApi from '../api/game'
 
-import '../styles/homeContainer.css'
+import {useHistory} from 'react-router-dom'
+
+import { Button, TextField } from '@material-ui/core'
+import GameApi from './../api/game'
+
+import './../styles/homeContainer.css'
 
 function HomeContainer() {
   let history = useHistory();

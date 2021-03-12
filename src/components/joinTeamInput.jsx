@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+
+import {connect} from 'react-redux';
+import {login} from '../redux/actions';
+
 import { makeStyles } from '@material-ui/core/styles'
 import GameApi from '../api/game'
 import { Button, TextField, Typography } from '@material-ui/core';
@@ -13,20 +17,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function JoinTeamInput(props) {
+function JoinTeamInput({gameRefID, username, teamName}) {
 
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const classes = useStyles();
 
   function joinTeam() {
-    console.log(`joining ${props.teamName} team... (${username})`);
-    GameApi.joinTeam(props.gameRefID, props.teamName, username);
+    console.log(`joining ${teamName} team... (${username})`);
+    GameApi.joinTeam(gameRefID, teamName, username);
   }
 
   return (
     <div className={classes.joinTeamContainer}>
-      <Typography variant='h5' color={(props.teamName === 'red' ? 'secondary' : 'primary')} style={{textTransform: 'uppercase'}}>
-        {props.teamName + " Team"}
+      <Typography variant='h5' color={(teamName === 'red' ? 'secondary' : 'primary')} style={{textTransform: 'uppercase'}}>
+        {teamName + " Team"}
       </Typography>
       <form className={classes.joinTeamForm} onSubmit={joinTeam}>
         <TextField
@@ -35,10 +39,10 @@ function JoinTeamInput(props) {
           name="joinTeam"
           type="text"
           value={username}
-          onChange={(event) => setUsername(event.target.value)}
+          onChange={(event) => setName(event.target.value)}
           label="Enter Username"
           variant="outlined"
-          color={(props.teamName === 'red' ? 'secondary' : 'primary')}
+          color={(teamName === 'red' ? 'secondary' : 'primary')}
           fullWidth={true}
         />
       </form>
@@ -47,11 +51,18 @@ function JoinTeamInput(props) {
         variant='contained'
         onClick={joinTeam}
         size='large'
-        color={(props.teamName === 'red' ? 'secondary' : 'primary')}>
-          Join {props.teamName}
+        color={(teamName === 'red' ? 'secondary' : 'primary')}>
+          Join {teamName}
       </Button>
     </div>
   );
 }
 
-export default JoinTeamInput;
+const mapStateToProps = (state) => {
+  return {
+    gameRefID: state.gameRefID,
+    username: state.username,
+  }
+}
+
+export default connect(mapStateToProps, {login})(JoinTeamInput);

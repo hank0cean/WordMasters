@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
+
+import {connect} from 'react-redux';
+
 import Card from './card';
 
 import GameApi from '../api/game';
 import '../styles/gameBoard.css';
 
 function GameBoard({gameRefID, spymaster}) {
+
+  console.log("gameRef: ", gameRefID);
+
 
   const [isLoading, setIsLoading] = useState(true);
   const [cardList, setCardList] = useState([]);
@@ -53,4 +59,11 @@ function GameBoard({gameRefID, spymaster}) {
 
 }
 
-export default GameBoard;
+const mapStateToProps = state => {
+  return {
+    gameRefID: state.gameRefID,
+    spymaster: state.spymaster,
+  }
+}
+
+export default connect(mapStateToProps, {})(GameBoard);

@@ -41,7 +41,7 @@ p {
 .verticalDivider {
   background-color: var(--text-primary);
   filter: grayscale(100%) opacity(0.7);
-  height: 100%;
+  height: auto;
   width: 4px;
   border-radius: 5px 5px 0px 0px;
 }

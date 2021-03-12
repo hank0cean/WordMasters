@@ -4,9 +4,9 @@ import {
   Switch,
   Route,
 } from 'react-router-dom'
-import HomeContainer from './components/homeContainer'
-import GameContainer from './components/gameContainer'
-import './styles/App.css'
+import HomeContainer from './homeContainer'
+import GameContainer from './gameContainer'
+import '../styles/App.css'
 
 function App() {
   return (
