@@ -1,10 +1,10 @@
 
-const usernameLogReducer = (state = false, action) => {
+const usernameLogReducer = (state = null, action) => {
   switch (action.type) {
     case 'LOG_IN':
-      return true
+      return action.payload.username
     case 'LOG_OUT':
-      return false
+      return action.payload.username
     default:
       return state
   }

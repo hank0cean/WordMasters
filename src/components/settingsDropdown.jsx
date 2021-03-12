@@ -1,6 +1,9 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 
+import {connect} from 'react-redux';
+import {set_spymaster} from '../redux/actions';
+
 import GameApi from '../api/game';
 
 function SettingsDropdown(props) {
@@ -31,4 +34,16 @@ function SettingsDropdown(props) {
   );
 }
 
-export default SettingsDropdown;
+const mapStateToProps = state => {
+  return {
+    gameRefID: state.gameRefID
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    set_spymaster: set_spymaster
+  }
+}
+
+export default connect({}, mapDispatchToProps)(SettingsDropdown);

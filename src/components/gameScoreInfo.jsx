@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 
+import {connect} from 'react-redux';
+
 import GameApi from '../api/game';
 import './../styles/gameScoreInfo.css'
 import { useEffect } from 'react';
 
-function GameScoreInfo(props) {
+function GameScoreInfo({gameRefID}) {
+
+  console.log("gameRef: ", gameRefID);
 
   const [gameInfo, setGameInfo] = useState({
     blueScore: '',
@@ -23,10 +27,10 @@ function GameScoreInfo(props) {
   }
 
   useEffect(() => {
-    GameApi.addListenerForRefChild('games', props.gameRefID, 'value', setGameScoreInfo);
+    GameApi.addListenerForRefChild('games', gameRefID, 'value', setGameScoreInfo);
 
     return () => {
-      GameApi.removeListenerForRefChild('games', props.gameRefID, 'value', setGameScoreInfo)
+      GameApi.removeListenerForRefChild('games', gameRefID, 'value', setGameScoreInfo)
     };
   }, []);
 
@@ -43,4 +47,11 @@ function GameScoreInfo(props) {
   );
 }
 
-export default GameScoreInfo;
+const mapStateToProps = state => {
+  console.log("mSTP in gSI, state.gameRefID: ", state.gameRefID)
+  return {
+    gameRefID: state.gameRefID
+  }
+}
+
+export default connect(mapStateToProps, {})(GameScoreInfo);

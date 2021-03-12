@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+
+import {connect} from 'react-redux'
+import {set_gameRef} from '../redux/actions/index'
 
 import GameBoard from './../components/gameBoard'
 import GameNavbar from './../components/gameNavbar'
@@ -6,30 +9,26 @@ import GameNavbar from './../components/gameNavbar'
 import './../styles/gameContainer.css'
 
 // Object destructuring gameRefID from props.match.params.gameRefID
-function GameContainer({match: {params: {gameRefID}}}) {
-	const [username, setUsername] = useState();
-	const [spymaster, setSpymaster] = useState();
+function GameContainer({gameRefID, set_gameRef}) {
 
-	useEffect(() => {
-		// check if username is the same as the spymaster on the db
-		// 			if username matches set spymaster to true
-	}, [username])
+	// console.log("gameRef: ", gameRefID)
+	set_gameRef(gameRefID);
 
 	return (
 		<div className="gameContainer">
-			<GameNavbar
-				gameRefID={gameRefID}
-				setSpymaster={setSpymaster}
-				setUsername={setUsername}
-			/>
-			<GameBoard
-				gameRefID={gameRefID}
-				spymaster={spymaster}
-				username={username}
-			/>
+			<GameNavbar />
+			<GameBoard />
 		</div>
 	);
 }
 
-export default GameContainer;
+const mapStateToProps = (state, ownProps) => {
+	console.log("params.gameRef: ", ownProps.match.params.gameRefID)
+	return {gameRefID: ownProps.match.params.gameRefID}
+}
+
+export default connect(
+	mapStateToProps,
+	{set_gameRef}
+)(GameContainer);
 

@@ -3,6 +3,9 @@ import { Box, Button } from '@material-ui/core';
 import InputPopup from './inputPopup';
 import JoinTeamInput from './joinTeamInput';
 
+import {connect} from 'react-redux';
+import {login} from '../redux/actions';
+
 import './../styles/teamsDropdown.css'
 import GameApi from '../api/game';
 
@@ -34,7 +37,7 @@ function teamListBox(gameRefID, teamName, playerList) {
   );
 }
 
-function TeamsDropdown(props) {
+function TeamsDropdown({gameRefID, username}) {
 
   const [gameObj, setGameObj] = useState({
     blueTeam: [],
@@ -43,7 +46,7 @@ function TeamsDropdown(props) {
   });
 
   useEffect(() => {
-    GameApi.addListenerForRefChild('games', props.gameRefID, 'value', (gameData) => {
+    GameApi.addListenerForRefChild('games', gameRefID, 'value', (gameData) => {
       if (gameData !== gameObj) {
         setGameObj({
           blueTeam: gameData.blueTeam,
@@ -53,15 +56,15 @@ function TeamsDropdown(props) {
       }
     });
 
-    return () => GameApi.removeListenerForRefChild('games', props.gameRefID, 'value')
+    return () => GameApi.removeListenerForRefChild('games', gameRefID, 'value')
   }, []);
 
   return (
     <div className="teamsDropdown">
       <div className="teamsInfo">
-        {teamListBox(props.gameRefID, "Red", gameObj.redTeam)}
+        {teamListBox(gameRefID, "Red", gameObj.redTeam)}
         <div className="verticalDivider" />
-        {teamListBox(props.gameRefID, "Blue", gameObj.blueTeam)}
+        {teamListBox(gameRefID, "Blue", gameObj.blueTeam)}
       </div>
       <div className="horizontalDivider" />
       <Box mt="1rem">
@@ -74,4 +77,11 @@ function TeamsDropdown(props) {
   );
 }
 
-export default TeamsDropdown;
+const mapStateToProps = (state) => {
+  return {
+    gameRefID: state.gameRefID,
+    username: state.username
+  }
+}
+
+export default connect(mapStateToProps, {login})(TeamsDropdown);
