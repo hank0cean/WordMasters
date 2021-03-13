@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function DecksDropdown(props) {
+function DecksDropdown() {
   const [currentDeck, setCurrentDeck] = useState('standard');
   const [newWord, setNewWord] = useState('');
   const styles = useStyles();

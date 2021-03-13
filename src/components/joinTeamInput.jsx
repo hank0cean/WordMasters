@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import {connect} from 'react-redux';
+import { useSelector } from 'react-redux';
 import {login} from '../redux/actions';
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -17,7 +17,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function JoinTeamInput({gameRefID, username, teamName}) {
+function JoinTeamInput({teamName}) {
+
+  const gameRefID = useSelector(state => state.gameRefID);
+  const username = useSelector(state => state.username);
 
   const [name, setName] = useState('');
   const classes = useStyles();
@@ -58,11 +61,4 @@ function JoinTeamInput({gameRefID, username, teamName}) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    gameRefID: state.gameRefID,
-    username: state.username,
-  }
-}
-
-export default connect(mapStateToProps, {login})(JoinTeamInput);
+export default JoinTeamInput;

@@ -3,13 +3,12 @@ import { Box, Button } from '@material-ui/core';
 import InputPopup from './inputPopup';
 import JoinTeamInput from './joinTeamInput';
 
-import {connect} from 'react-redux';
-import {login} from '../redux/actions';
+import { useSelector } from 'react-redux';
 
 import './../styles/teamsDropdown.css'
 import GameApi from '../api/game';
 
-function teamListBox(gameRefID, teamName, playerList) {
+function teamListBox(teamName, playerList) {
   
   console.log("playerList: ", playerList)
 
@@ -23,12 +22,12 @@ function teamListBox(gameRefID, teamName, playerList) {
         {(teamName === 'Blue' ? 
           <Box ml="0.5rem" my="1rem">
             <InputPopup buttonText="Join Blue" buttonColor="primary">
-              <JoinTeamInput teamName="blue" gameRefID={gameRefID} />
+              <JoinTeamInput teamName="blue" />
             </InputPopup>
           </Box>
         : <Box my="1rem">
             <InputPopup buttonText="Join Red" buttonColor="secondary">
-              <JoinTeamInput teamName="red" gameRefID={gameRefID} />
+              <JoinTeamInput teamName="red" />
             </InputPopup>
           </Box>
         )}
@@ -37,7 +36,9 @@ function teamListBox(gameRefID, teamName, playerList) {
   );
 }
 
-function TeamsDropdown({gameRefID, username}) {
+function TeamsDropdown() {
+
+  const gameRefID = useSelector(state => state.gameRefID);
 
   const [gameObj, setGameObj] = useState({
     blueTeam: [],
@@ -77,11 +78,4 @@ function TeamsDropdown({gameRefID, username}) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    gameRefID: state.gameRefID,
-    username: state.username
-  }
-}
-
-export default connect(mapStateToProps, {login})(TeamsDropdown);
+export default TeamsDropdown;

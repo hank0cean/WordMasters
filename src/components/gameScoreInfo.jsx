@@ -50,6 +50,8 @@ function GameScoreInfo() {
 
 export default GameScoreInfo;
 
+//  for use of old connect() style react redux component
+
 // const mapStateToProps = state => {
 //   console.log("mSTP in gSI, state.gameRefID: ", state.gameRefID)
 //   return {

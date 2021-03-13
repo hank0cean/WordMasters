@@ -1,12 +1,15 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 
-import {connect} from 'react-redux';
-import {set_spymaster} from '../redux/actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { set_spymaster } from '../redux/actions';
 
 import GameApi from '../api/game';
 
-function SettingsDropdown(props) {
+function SettingsDropdown() {
+
+  const gameRefID = useSelector(state => state.gameRefID);
+  const dispatch = useDispatch();
 
   async function becomeSpymaster(gameRefID) {
 
@@ -14,11 +17,11 @@ function SettingsDropdown(props) {
 
     if (!gameObj.spymaster1) {
       GameApi.addSpymaster(gameRefID);
-      props.setSpymaster(true);
+      dispatch(set_spymaster(gameRefID));
     }
     else if (!gameObj.spymaster2) {
       GameApi.addSpymaster(gameRefID, true);
-      props.setSpymaster(true);
+      dispatch(set_spymaster(gameRefID));
     }
     else {
       // console.log("too many spymasters")
@@ -27,23 +30,11 @@ function SettingsDropdown(props) {
 
   return (
     <div className="settingsDropdown">
-      <Button type="submit" variant="contained" onClick={() => becomeSpymaster(props.gameRefID)} >
+      <Button type="submit" variant="contained" onClick={() => becomeSpymaster(gameRefID)} >
         Become Spymaster
       </Button>
     </div>
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    gameRefID: state.gameRefID
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    set_spymaster: set_spymaster
-  }
-}
-
-export default connect({}, mapDispatchToProps)(SettingsDropdown);
+export default SettingsDropdown;
