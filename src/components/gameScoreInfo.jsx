@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import {connect} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import GameApi from '../api/game';
-import './../styles/gameScoreInfo.css'
-import { useEffect } from 'react';
+import './../styles/gameScoreInfo.css';
 
-function GameScoreInfo({gameRefID}) {
+function GameScoreInfo() {
+
+  const gameRefID = useSelector(state => state.gameRefID)
 
   console.log("gameRef: ", gameRefID);
 
@@ -47,11 +48,13 @@ function GameScoreInfo({gameRefID}) {
   );
 }
 
-const mapStateToProps = state => {
-  console.log("mSTP in gSI, state.gameRefID: ", state.gameRefID)
-  return {
-    gameRefID: state.gameRefID
-  }
-}
+export default GameScoreInfo;
 
-export default connect(mapStateToProps, {})(GameScoreInfo);
+// const mapStateToProps = state => {
+//   console.log("mSTP in gSI, state.gameRefID: ", state.gameRefID)
+//   return {
+//     gameRefID: state.gameRefID
+//   }
+// }
+
+// export default connect(mapStateToProps, {})(GameScoreInfo);
