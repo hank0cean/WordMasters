@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {login} from '../redux/actions';
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -20,14 +20,16 @@ const useStyles = makeStyles((theme) => ({
 function JoinTeamInput({teamName}) {
 
   const gameRefID = useSelector(state => state.gameRefID);
-  const username = useSelector(state => state.username);
+  // const loggedUsername = useSelector(state => state.username);
+  const dispatch = useDispatch();
 
-  const [name, setName] = useState('');
+  const [inputName, setInputName] = useState('');
   const classes = useStyles();
 
-  function joinTeam() {
-    console.log(`joining ${teamName} team... (${username})`);
-    GameApi.joinTeam(gameRefID, teamName, username);
+  const joinTeam = () => {
+    dispatch(login(inputName));
+    console.log(`joining ${teamName} team... (${inputName})`);
+    GameApi.joinTeam(gameRefID, teamName, inputName);
   }
 
   return (
@@ -35,20 +37,20 @@ function JoinTeamInput({teamName}) {
       <Typography variant='h5' color={(teamName === 'red' ? 'secondary' : 'primary')} style={{textTransform: 'uppercase'}}>
         {teamName + " Team"}
       </Typography>
-      <form className={classes.joinTeamForm} onSubmit={joinTeam}>
+      <div className={classes.joinTeamForm}>
         <TextField
           autoComplete='off'
           id="joinTeamInput"
           name="joinTeam"
           type="text"
-          value={username}
-          onChange={(event) => setName(event.target.value)}
+          value={inputName}
+          onChange={(event) => setInputName(event.target.value)}
           label="Enter Username"
           variant="outlined"
           color={(teamName === 'red' ? 'secondary' : 'primary')}
           fullWidth={true}
         />
-      </form>
+      </div>
       <Button
         type="submit"
         variant='contained'

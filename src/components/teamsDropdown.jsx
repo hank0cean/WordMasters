@@ -8,18 +8,18 @@ import { useSelector } from 'react-redux';
 import './../styles/teamsDropdown.css'
 import GameApi from '../api/game';
 
-function teamListBox(teamName, playerList) {
-  
+function teamListBox(teamName, playerList, loggedUser) {
+
   console.log("playerList: ", playerList)
 
   return (
     <div className="teamListBox">
       <h4 className="teamNameHeader">{teamName + " Team"}</h4>
-      {(playerList ?  playerList.map(({key, name}) => (
-        <div key={key}>{name}</div>
+      {(playerList ?  playerList.map(({key, username}) => (
+        <div key={key}>{username}</div>
       )) : <p>No Players</p>)}
       <div className="stickBottom">
-        {(teamName === 'Blue' ? 
+        {(loggedUser === null ? (teamName === 'Blue' ? 
           <Box ml="0.5rem" my="1rem">
             <InputPopup buttonText="Join Blue" buttonColor="primary">
               <JoinTeamInput teamName="blue" />
@@ -30,7 +30,7 @@ function teamListBox(teamName, playerList) {
               <JoinTeamInput teamName="red" />
             </InputPopup>
           </Box>
-        )}
+        ) : <div></div>)}
       </div>
     </div>
   );
@@ -39,6 +39,11 @@ function teamListBox(teamName, playerList) {
 function TeamsDropdown() {
 
   const gameRefID = useSelector(state => state.gameRefID);
+  const loggedUser = useSelector(state => state.username);
+  const inviteLink = () => {
+    const copy = require('clipboard-copy');
+    copy("https://truethought-1b13a.web.app/game/" + gameRefID);
+  };
 
   const [gameObj, setGameObj] = useState({
     blueTeam: [],
@@ -63,16 +68,16 @@ function TeamsDropdown() {
   return (
     <div className="teamsDropdown">
       <div className="teamsInfo">
-        {teamListBox(gameRefID, "Red", gameObj.redTeam)}
+        {teamListBox("Red", gameObj.redTeam, loggedUser)}
         <div className="verticalDivider" />
-        {teamListBox(gameRefID, "Blue", gameObj.blueTeam)}
+        {teamListBox("Blue", gameObj.blueTeam, loggedUser)}
       </div>
       <div className="horizontalDivider" />
-      <Box mt="1rem">
+      {/* <Box mt="1rem">
         <Button variant="contained">Randomize Teams</Button>
-      </Box>
+      </Box> */}
       <Box mt="1rem">
-        <Button variant="contained">Invite Link</Button>
+        <Button variant="contained" onClick={inviteLink} >Invite Link</Button>
       </Box>
     </div>
   );

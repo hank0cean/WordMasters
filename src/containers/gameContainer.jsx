@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useDispatch } from 'react-redux'
 import { set_gameRef } from '../redux/actions/index'
@@ -8,10 +8,15 @@ import GameNavbar from './../components/gameNavbar'
 
 import './../styles/gameContainer.css'
 
-// Object destructuring gameRefID from props.match.params.gameRefID
 function GameContainer({match: {params: {gameRefID}}}) {
 
 	useDispatch()(set_gameRef(gameRefID));
+
+	// useEffect(() => {
+	// 	return function logoutUsername() {
+
+	// 	}
+	// })
 
 	return (
 		<div className="gameContainer">

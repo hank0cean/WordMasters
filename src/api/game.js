@@ -53,9 +53,51 @@ export default class GameApi {
     .then((gameObj) => {
       let currentTeam = (teamName === 'red' ? gameObj.redTeam : gameObj.blueTeam)
       console.log("currentTeam: ", currentTeam);
-      (currentTeam ? currentTeam.push({key: '10', name: username}) : currentTeam = [{key: '10', name: username}]);
+      let playerMatch = () => {
+        let match = null;
+        currentTeam.forEach(player => {
+          console.log("player: ", player)
+          if (player.username === username)
+            console.log("match! player.username: ", player.username)
+            match = player;
+        });
+        return match;
+      };
+      if (!currentTeam) {
+        // no team, needs to be created
+        console.log("create new team w/ new player: ", username);
+        currentTeam = [{key: '1', username: username, logged: true}];
+      }
+      else {
+        // check team for match of username
+        let match = playerMatch();
+        console.log("match: ", match)
+        if (match) {
+          if (match.logged) {
+            // error: player is already logged in
+            console.log("player is already logged in: ", username);
+
+          }
+          else {
+            // player logging back in, update player object in team
+            console.log("logging back in: ", username);
+          }
+        }
+        else {
+          // create new player on the team 
+          console.log("add new player: ", username);
+          currentTeam
+          .push({
+            key: '42',
+            username: username,
+            logged: true,
+            spymaster: false
+          });
+        }
+      }
+      
       console.log("newTeam: ", currentTeam);
-      updates['/games/' + gameRefID + '/' + teamName + 'Team'] = currentTeam;
+      updates['/games/' + gameRefID + '/' + teamName.toLowerCase() + 'Team'] = currentTeam;
       database.ref().update(updates);
     })
   }
