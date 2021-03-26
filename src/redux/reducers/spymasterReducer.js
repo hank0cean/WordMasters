@@ -2,8 +2,7 @@
 const spymasterReducer = (state = false, action) => {
     switch (action.type) {
         case 'SET_SPYMASTER':
-            return !state;
-    
+            return true;
         default:
             return state;
     }

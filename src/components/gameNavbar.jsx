@@ -49,7 +49,7 @@ function GameNavbar() {
           itemText="Settings"
           itemIsActive={activeItem === 'settings'}
           handleClick={handleClick('settings')}>
-            <SettingsDropdown />
+            {/* <SettingsDropdown /> */}
         </NavItem>
       </ul>
     </nav>

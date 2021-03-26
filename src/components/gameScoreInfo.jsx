@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
-import GameApi from '../api/game';
+import Firebase from '../api/firebase';
 import './../styles/gameScoreInfo.css';
 
 function GameScoreInfo() {
@@ -28,10 +28,10 @@ function GameScoreInfo() {
   }
 
   useEffect(() => {
-    GameApi.addListenerForRefChild('games', gameRefID, 'value', setGameScoreInfo);
+    Firebase.addListenerForRefChild('games', gameRefID, 'value', setGameScoreInfo);
 
     return () => {
-      GameApi.removeListenerForRefChild('games', gameRefID, 'value', setGameScoreInfo)
+      Firebase.removeListenerForRefChild('games', gameRefID, 'value', setGameScoreInfo)
     };
   }, []);
 

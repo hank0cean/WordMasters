@@ -1,3 +1,3 @@
-import firebaseClient from './firebase'
+import firebaseClient from './firebaseClient'
 
-export default firebaseClient.database()
+export default firebaseClient.database();

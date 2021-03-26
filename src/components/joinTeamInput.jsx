@@ -26,7 +26,7 @@ function JoinTeamInput({teamName}) {
   const [inputName, setInputName] = useState('');
   const classes = useStyles();
 
-  const joinTeam = () => {
+  const joinHandler = () => {
     dispatch(login(inputName));
     console.log(`joining ${teamName} team... (${inputName})`);
     GameApi.joinTeam(gameRefID, teamName, inputName);
@@ -54,7 +54,7 @@ function JoinTeamInput({teamName}) {
       <Button
         type="submit"
         variant='contained'
-        onClick={joinTeam}
+        onClick={joinHandler}
         size='large'
         color={(teamName === 'red' ? 'secondary' : 'primary')}>
           Join {teamName}
