@@ -250,39 +250,40 @@ export default class GameApi {
   static async changePlayerStatus(gameRefID, username) {
     console.log("changing player status")
 
-    let updateTeam = (team) => {
-      let updatedTeam = team.map((player) => {
-        if (player.username === username) {
-          return {
-            key: player.key,
-            username: player.username,
-            logged: (!player.logged),
-            spymaster: player.spymaster,
-          }
-        } else return player;
-      });
-      return updatedTeam;
-    }
-
-    try {
-      GameApi.findGameByID(gameRefID)
-      .then(({redTeam, blueTeam}) => {
-        let playerOnRed = true;
-        if (blueTeam) {
-          for (let i = 0; i < blueTeam.length; i++) {
-            if (blueTeam[i].username === username) {
-              playerOnRed = false;
+    if (username !== null) {
+      let updateTeam = (team) => {
+        let updatedTeam = team.map((player) => {
+          if (player.username === username) {
+            return {
+              key: player.key,
+              username: player.username,
+              logged: (!player.logged),
+              spymaster: player.spymaster,
             }
-          } 
-        }
-        else if (!redTeam) throw "no teams";
-        let newTeam = playerOnRed ? updateTeam(redTeam) : updateTeam(blueTeam);
-        Firebase.updateRefChild('games', gameRefID, playerOnRed ? 'redTeam' : 'blueTeam', newTeam)
-      });
-    } catch (error) {
-      console.log("no teams", error)
+          } else return player;
+        });
+        return updatedTeam;
+      }
+  
+      try {
+        GameApi.findGameByID(gameRefID)
+        .then(({redTeam, blueTeam}) => {
+          let playerOnRed = true;
+          if (blueTeam) {
+            for (let i = 0; i < blueTeam.length; i++) {
+              if (blueTeam[i].username === username) {
+                playerOnRed = false;
+              }
+            } 
+          }
+          else if (!redTeam) throw "no teams";
+          let newTeam = playerOnRed ? updateTeam(redTeam) : updateTeam(blueTeam);
+          Firebase.updateRefChild('games', gameRefID, playerOnRed ? 'redTeam' : 'blueTeam', newTeam)
+        });
+      } catch (error) {
+        console.log("no teams", error)
+      }
     }
-    
   }
 
   static async login(gameRefID, username) {

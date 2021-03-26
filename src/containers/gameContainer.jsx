@@ -22,7 +22,7 @@ function GameContainer({match: {params: {gameRefID}}}) {
 
   const handleChangePlayerStatus = () => {
     console.log("setup event listeners")
-    window.addEventListener('DOMContentLoaded', GameApi.changePlayerStatus(storeGameRefID, username))
+    // window.addEventListener('DOMContentLoaded', GameApi.changePlayerStatus(storeGameRefID, username))
     window.addEventListener('unload', GameApi.changePlayerStatus(storeGameRefID, username))
   }
 
@@ -32,6 +32,9 @@ function GameContainer({match: {params: {gameRefID}}}) {
 
 
 	useEffect(() => {
+    if (username !== null) {
+      GameApi.changePlayerStatus(storeGameRefID, username);
+    }
     handleChangePlayerStatus()
 
     // if (username !== null) {
