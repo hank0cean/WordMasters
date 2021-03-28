@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { set_gameRef } from '../redux/actions/index'
+import { set_gameRef, set_spymaster } from '../redux/actions/index'
 
 import GameBoard from './../components/gameBoard'
 import GameNavbar from './../components/gameNavbar'
@@ -14,7 +14,8 @@ import GameApi from './../api/game'
 
 function GameContainer({match: {params: {gameRefID}}}) {
 
-	useDispatch()(set_gameRef(gameRefID));
+  let dispatch = useDispatch();
+	dispatch(set_gameRef(gameRefID));
 	const history = useHistory();
 	const storeGameRefID = useSelector((state) => state.gameRefID);
 	const username = useSelector((state) => state.username);
@@ -26,13 +27,16 @@ function GameContainer({match: {params: {gameRefID}}}) {
     window.addEventListener('unload', GameApi.changePlayerStatus(storeGameRefID, username))
   }
 
-	useState(() => {
+	useEffect(() => {
 		history.push(`/game/${storeGameRefID}`);
-	});
-
+	}, [storeGameRefID]);
 
 	useEffect(() => {
     if (username !== null) {
+      GameApi.findGameByID(storeGameRefID).then(({spymasterRed, spymasterBlue}) => {
+        if (spymasterRed === username) dispatch(set_spymaster(true));
+        if (spymasterBlue === username) dispatch(set_spymaster(true));
+      });
       GameApi.changePlayerStatus(storeGameRefID, username);
     }
     handleChangePlayerStatus()

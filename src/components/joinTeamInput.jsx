@@ -27,9 +27,9 @@ function JoinTeamInput({teamName}) {
   const classes = useStyles();
 
   const joinHandler = () => {
-    dispatch(login(inputName));
     console.log(`joining ${teamName} team... (${inputName})`);
-    GameApi.joinTeam(gameRefID, teamName, inputName);
+    let player = GameApi.joinTeam(gameRefID, teamName, inputName);
+    dispatch(login(inputName));
   }
 
   return (

@@ -6,13 +6,12 @@ import Card from './card';
 
 import GameApi from '../api/game';
 import '../styles/gameBoard.css';
+import { set_spymaster } from '../redux/actions';
 
 function GameBoard() {
 
   const gameRefID = useSelector(state => state.gameRefID);
-  const spymaster = useSelector(state => state.spymaster)
-  // const dispatch = useDispatch();
-
+  const spymaster = useSelector(state => state.spymaster);
   const [isLoading, setIsLoading] = useState(true);
   const [cardList, setCardList] = useState([]);
 

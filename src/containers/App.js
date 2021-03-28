@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 import HomeContainer from './homeContainer'
 import GameContainer from './gameContainer'
+import DeckEditorContainer from './deckEditorContainer'
 import '../styles/App.css'
 
 function App() {
@@ -21,6 +22,10 @@ function App() {
           <Route
             path="/game/:gameRefID"
             component={GameContainer}
+          />
+          <Route
+            path="/decks"
+            component={DeckEditorContainer}
           />
           <Route 
             path="*"

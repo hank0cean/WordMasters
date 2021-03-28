@@ -40,7 +40,6 @@ export default class GameApi {
     const queryRef = database.ref('games').child(gameRefID);
     const queryObj = await queryRef.once('value');
 
-
     return queryObj.val();
   }
 
@@ -166,7 +165,7 @@ export default class GameApi {
    * @param {String} cardRefID    - Firebase database reference id for the Card.
    */
   static addSpymaster(gameRefID, teamName, username) {
-    let capitalizedTeamName = teamName.charAt(0).toUpperCase() + teamName.slice(1)
+    let capitalizedTeamName = teamName === 'red' ? 'Red' : 'Blue';
     Firebase.updateRefChild('games', gameRefID, 'spymaster' + capitalizedTeamName, username);
   }
 

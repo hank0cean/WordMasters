@@ -3,6 +3,8 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { set_spymaster } from '../redux/actions';
+
 import GameApi from '../api/game';
 
 function BecomeTeamSpymaster({teamName, username}) {
@@ -11,12 +13,12 @@ function BecomeTeamSpymaster({teamName, username}) {
 
   async function becomeSpymaster(gameRefID) {
 
-    const gameObj = await GameApi.findGameByID(gameRefID);
-    try {
+    // const gameObj = await GameApi.findGameByID(gameRefID);
+    // try {
       GameApi.addSpymaster(gameRefID, teamName, username);
-      dispatch(set_spymaster(gameRefID));
-    }
-    catch (error) {}
+      dispatch(set_spymaster(username));
+    // }
+    // catch (error) {}
 
   }
 
