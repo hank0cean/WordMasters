@@ -47,18 +47,17 @@ const cardColorStyle = (color) => {
 
 function Card(props) {
 
-  let color = '';
-  let word = '';
-
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [card, setCard] = useState({
+    word: '',
+    color: '',
+    isFlipped: false,
+  });
   const classes = useStyles();
 
   useEffect(() => {
     Firebase.addListenerForRefChild('cards', props.cardRefID, 'value', (cardData) => {
-      if ([cardData.isFlipped, cardData.word, cardData.color] !== [isFlipped, word, color]) {
-        setIsFlipped(cardData.isFlipped);
-        word = cardData.word;
-        color = cardData.color;
+      if (cardData !== card) {
+        setCard(cardData);
       }
     });
   }, []);
@@ -67,11 +66,11 @@ function Card(props) {
     <ButtonBase
       color="primary"
       variant="outlined"
-      onClick={props.spymaster || isFlipped ? () => {} : () => GameApi.flipCard(props.cardRefID)}
-      className={`${classes.card} ${(isFlipped ? classes.flipped : '')}`}
-      style={isFlipped || props.spymaster ? cardColorStyle(color) : {}}
+      onClick={props.spymaster || card.isFlipped ? () => {} : () => GameApi.flipCard(props.cardRefID)}
+      className={`${classes.card} ${(card.isFlipped ? classes.flipped : '')}`}
+      style={card.isFlipped || props.spymaster ? cardColorStyle(card.color) : {}}
     >
-      {word}
+      {card.word}
     </ButtonBase>
   );
 }
