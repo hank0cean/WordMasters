@@ -11,7 +11,7 @@ export default class Firebase {
    * @param   {String}    eventType   - Firebase reference .on(eventType).
    * @param   {Function}  func        - Callback function to run when the listener is triggered.
    */
-   static async addListenerForRefChild(ref, refID, eventType='value', func) {
+  static async addListenerForRefChild(ref, refID, eventType='value', func) {
     database.ref(ref).child(refID).on(eventType, (snapshot) => {func(snapshot.val())})
   }
 
