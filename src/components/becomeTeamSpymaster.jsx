@@ -1,31 +1,23 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
 
+import { Button } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
+
 import { set_spymaster } from '../redux/actions';
 
 import GameApi from '../api/game';
 
-function SettingsDropdown() {
-
+function BecomeTeamSpymaster({teamName, username}) {
   const gameRefID = useSelector(state => state.gameRefID);
   const dispatch = useDispatch();
-
   async function becomeSpymaster(gameRefID) {
 
-    const gameObj = await GameApi.findGameByID(gameRefID);
-
-    if (!gameObj.spymasterRed) {
-      GameApi.addSpymaster(gameRefID);
-      dispatch(set_spymaster(gameRefID));
-    }
-    else if (!gameObj.spymasterBlue) {
-      GameApi.addSpymaster(gameRefID, true);
-      dispatch(set_spymaster(gameRefID));
-    }
-    else {
-      // console.log("too many spymasters")
-    }
+    // const gameObj = await GameApi.findGameByID(gameRefID);
+    // try {
+      GameApi.addSpymaster(gameRefID, teamName, username);
+      dispatch(set_spymaster(username));
+    // }
+    // catch (error) {}
   }
 
   return (
@@ -37,4 +29,4 @@ function SettingsDropdown() {
   );
 }
 
-export default SettingsDropdown;
+export default BecomeTeamSpymaster;

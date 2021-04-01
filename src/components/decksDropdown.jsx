@@ -44,14 +44,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function DecksDropdown(props) {
+function DecksDropdown() {
   const [currentDeck, setCurrentDeck] = useState('standard');
   const [newWord, setNewWord] = useState('');
   const styles = useStyles();
-
-  function addWordToDeck(deckName, newWord) {
-    GameApi.addWordToDeck(deckName, newWord);
-  }
 
   return ( 
     <div className={styles.decksDropdown}>
@@ -93,7 +89,7 @@ function DecksDropdown(props) {
           className={styles.button}
           variant="contained"
           onClick={() => {
-            addWordToDeck(currentDeck, newWord)
+            GameApi.addWordToDeck(currentDeck, newWord)
             setNewWord('')
           }}
         >

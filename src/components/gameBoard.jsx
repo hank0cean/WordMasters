@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
-import {connect} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Card from './card';
 
 import GameApi from '../api/game';
 import '../styles/gameBoard.css';
+import { set_spymaster } from '../redux/actions';
 
-function GameBoard({gameRefID, spymaster}) {
+function GameBoard() {
 
-  console.log("gameRef: ", gameRefID);
-
-
+  const gameRefID = useSelector(state => state.gameRefID);
+  const spymaster = useSelector(state => state.spymaster);
   const [isLoading, setIsLoading] = useState(true);
   const [cardList, setCardList] = useState([]);
 
@@ -56,14 +56,6 @@ function GameBoard({gameRefID, spymaster}) {
       </>
     )
   }
-
 }
 
-const mapStateToProps = state => {
-  return {
-    gameRefID: state.gameRefID,
-    spymaster: state.spymaster,
-  }
-}
-
-export default connect(mapStateToProps, {})(GameBoard);
+export default GameBoard;

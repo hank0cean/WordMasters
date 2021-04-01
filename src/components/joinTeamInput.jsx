@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import {connect} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {login} from '../redux/actions';
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -17,14 +17,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function JoinTeamInput({gameRefID, username, teamName}) {
+function JoinTeamInput({teamName}) {
 
-  const [name, setName] = useState('');
+  const gameRefID = useSelector(state => state.gameRefID);
+  // const loggedUsername = useSelector(state => state.username);
+  const dispatch = useDispatch();
+
+  const [inputName, setInputName] = useState('');
   const classes = useStyles();
 
-  function joinTeam() {
-    console.log(`joining ${teamName} team... (${username})`);
-    GameApi.joinTeam(gameRefID, teamName, username);
+  const joinHandler = () => {
+    console.log(`joining ${teamName} team... (${inputName})`);
+    let player = GameApi.joinTeam(gameRefID, teamName, inputName);
+    dispatch(login(inputName));
   }
 
   return (
@@ -32,24 +37,24 @@ function JoinTeamInput({gameRefID, username, teamName}) {
       <Typography variant='h5' color={(teamName === 'red' ? 'secondary' : 'primary')} style={{textTransform: 'uppercase'}}>
         {teamName + " Team"}
       </Typography>
-      <form className={classes.joinTeamForm} onSubmit={joinTeam}>
+      <div className={classes.joinTeamForm}>
         <TextField
           autoComplete='off'
           id="joinTeamInput"
           name="joinTeam"
           type="text"
-          value={username}
-          onChange={(event) => setName(event.target.value)}
+          value={inputName}
+          onChange={(event) => setInputName(event.target.value)}
           label="Enter Username"
           variant="outlined"
           color={(teamName === 'red' ? 'secondary' : 'primary')}
           fullWidth={true}
         />
-      </form>
+      </div>
       <Button
         type="submit"
         variant='contained'
-        onClick={joinTeam}
+        onClick={joinHandler}
         size='large'
         color={(teamName === 'red' ? 'secondary' : 'primary')}>
           Join {teamName}
@@ -58,11 +63,4 @@ function JoinTeamInput({gameRefID, username, teamName}) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    gameRefID: state.gameRefID,
-    username: state.username,
-  }
-}
-
-export default connect(mapStateToProps, {login})(JoinTeamInput);
+export default JoinTeamInput;

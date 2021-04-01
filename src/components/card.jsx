@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { ButtonBase } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 
-import GameApi from '../api/game'
+import GameApi from '../api/game';
+import Firebase from '../api/firebase';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -54,7 +55,7 @@ function Card(props) {
   const classes = useStyles();
 
   useEffect(() => {
-    GameApi.addListenerForRefChild('cards', props.cardRefID, 'value', (cardData) => {
+    Firebase.addListenerForRefChild('cards', props.cardRefID, 'value', (cardData) => {
       if (cardData !== card) {
         setCard(cardData);
       }

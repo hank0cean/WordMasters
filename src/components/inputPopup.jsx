@@ -46,7 +46,9 @@ function InputPopup({ buttonText, buttonColor, children }) {
       </Button>
       <div className={(show ? classes.show : classes.hide)}>
         <div className={classes.inputPopupContainer}>
-          {children}
+          <div onSubmit={handleOpenClose}>
+            {children}
+          </div>
           <Button variant="contained" color='default' onClick={handleOpenClose}>
             Close
           </Button>

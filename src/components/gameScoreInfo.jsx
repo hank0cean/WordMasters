@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import {connect} from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import GameApi from '../api/game';
-import './../styles/gameScoreInfo.css'
-import { useEffect } from 'react';
+import Firebase from '../api/firebase';
+import './../styles/gameScoreInfo.css';
 
-function GameScoreInfo({gameRefID}) {
+function GameScoreInfo() {
+
+  const gameRefID = useSelector(state => state.gameRefID)
 
   console.log("gameRef: ", gameRefID);
 
@@ -27,10 +28,10 @@ function GameScoreInfo({gameRefID}) {
   }
 
   useEffect(() => {
-    GameApi.addListenerForRefChild('games', gameRefID, 'value', setGameScoreInfo);
+    Firebase.addListenerForRefChild('games', gameRefID, 'value', setGameScoreInfo);
 
     return () => {
-      GameApi.removeListenerForRefChild('games', gameRefID, 'value', setGameScoreInfo)
+      Firebase.removeListenerForRefChild('games', gameRefID, 'value', setGameScoreInfo)
     };
   }, []);
 
@@ -47,11 +48,15 @@ function GameScoreInfo({gameRefID}) {
   );
 }
 
-const mapStateToProps = state => {
-  console.log("mSTP in gSI, state.gameRefID: ", state.gameRefID)
-  return {
-    gameRefID: state.gameRefID
-  }
-}
+export default GameScoreInfo;
 
-export default connect(mapStateToProps, {})(GameScoreInfo);
+//  for use of old connect() style react redux component
+
+// const mapStateToProps = state => {
+//   console.log("mSTP in gSI, state.gameRefID: ", state.gameRefID)
+//   return {
+//     gameRefID: state.gameRefID
+//   }
+// }
+
+// export default connect(mapStateToProps, {})(GameScoreInfo);
